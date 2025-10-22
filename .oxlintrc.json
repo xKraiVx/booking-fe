@@ -1,0 +1,4 @@
+{
+  "rules": {},
+  "ignore": ["node_modules", "dist", "build", "src/routeTree.gen.ts"]
+}
