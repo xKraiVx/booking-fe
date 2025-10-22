@@ -2,7 +2,21 @@
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "entry": ["src/main.tsx", "src/routeTree.gen.ts"],
   "project": ["src/**/*.{ts,tsx}"],
-  "ignore": ["dist/**", "build/**"],
+  "ignore": [
+    "dist/**",
+    "build/**",
+    "src/App.tsx",
+    "src/components/ui/**",
+    "src/i18n/config.ts"
+  ],
+  "ignoreExportsUsedInFile": {
+    "interface": true,
+    "type": true
+  },
+  "ignoreDependencies": [
+    "@radix-ui/react-alert-dialog",
+    "@radix-ui/react-radio-group"
+  ],
   "vite": {
     "config": ["vite.config.ts"]
   }
