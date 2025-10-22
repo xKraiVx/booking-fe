@@ -1,44 +1,83 @@
-import * as React from 'react'
-import { createLazyFileRoute } from '@tanstack/react-router'
-import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/button/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Checkbox } from '@/components/ui/checkbox'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Calendar, Users, Clock } from 'lucide-react'
+import * as React from "react";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Calendar, Users, Clock } from "lucide-react";
+import { LoginDialog } from "../components/LoginDialog";
+import { UserMenu } from "../components/UserMenu";
+import { useAuthStore } from "../store/authStore";
 
-export const Route = createLazyFileRoute('/')({
+export const Route = createLazyFileRoute("/")({
   component: Index,
-})
+});
 
 function Index() {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation();
+  const { isAuthenticated } = useAuthStore();
 
   const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng)
-  }
+    i18n.changeLanguage(lng);
+  };
 
   return (
     <div className="container mx-auto p-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">{t('app.welcome')}</h1>
-        <p className="text-lg text-muted-foreground mb-6">{t('app.title')}</p>
-        
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">{t("app.welcome")}</h1>
+            <p className="text-lg text-muted-foreground">{t("app.title")}</p>
+          </div>
+          <div className="flex items-center gap-4">
+            {isAuthenticated ? <UserMenu /> : <LoginDialog />}
+          </div>
+        </div>
+
         <div className="flex gap-2 mb-8">
           <Button
-            onClick={() => changeLanguage('en')}
-            variant={i18n.language === 'en' ? 'default' : 'outline'}
+            onClick={() => changeLanguage("en")}
+            variant={i18n.language === "en" ? "default" : "outline"}
           >
             English
           </Button>
           <Button
-            onClick={() => changeLanguage('uk')}
-            variant={i18n.language === 'uk' ? 'default' : 'outline'}
+            onClick={() => changeLanguage("uk")}
+            variant={i18n.language === "uk" ? "default" : "outline"}
           >
             Українська
           </Button>
@@ -48,7 +87,9 @@ function Index() {
       </div>
 
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">shadcn/ui Components Demo</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          shadcn/ui Components Demo
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card>
             <CardHeader>
@@ -60,7 +101,8 @@ function Index() {
             </CardHeader>
             <CardContent>
               <p className="text-sm">
-                Our intuitive booking system makes it easy to manage your reservations.
+                Our intuitive booking system makes it easy to manage your
+                reservations.
               </p>
             </CardContent>
             <CardFooter>
@@ -78,7 +120,8 @@ function Index() {
             </CardHeader>
             <CardContent>
               <p className="text-sm">
-                Centralized dashboard for managing all your customer relationships.
+                Centralized dashboard for managing all your customer
+                relationships.
               </p>
             </CardContent>
             <CardFooter>
@@ -123,7 +166,7 @@ function Index() {
             <Button variant="link">Link</Button>
             <Button variant="destructive">Destructive</Button>
           </div>
-          
+
           <div className="flex flex-wrap gap-4 mt-4">
             <Button size="sm">Small</Button>
             <Button size="default">Default</Button>
@@ -139,11 +182,11 @@ function Index() {
         <ComponentsDemo />
       </div>
     </div>
-  )
+  );
 }
 
 function ComponentsDemo() {
-  const [checked, setChecked] = React.useState(false)
+  const [checked, setChecked] = React.useState(false);
 
   return (
     <div className="space-y-8">
@@ -153,7 +196,9 @@ function ComponentsDemo() {
           <Card>
             <CardHeader>
               <CardTitle>Dialog & Form Demo</CardTitle>
-              <CardDescription>Click to see a dialog with form inputs</CardDescription>
+              <CardDescription>
+                Click to see a dialog with form inputs
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <DialogDemo />
@@ -177,8 +222,8 @@ function ComponentsDemo() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="terms" 
+                <Checkbox
+                  id="terms"
                   checked={checked}
                   onCheckedChange={(value) => setChecked(value as boolean)}
                 />
@@ -207,7 +252,7 @@ function ComponentsDemo() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function DialogDemo() {
@@ -242,7 +287,7 @@ function DialogDemo() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 function DropdownMenuDemo() {
@@ -267,12 +312,10 @@ function DropdownMenuDemo() {
           <span>Schedule</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-red-600">
-          Log out
-        </DropdownMenuItem>
+        <DropdownMenuItem className="text-red-600">Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
 
 function SelectDemo() {
@@ -289,5 +332,5 @@ function SelectDemo() {
         <SelectItem value="consultation">Consultation</SelectItem>
       </SelectContent>
     </Select>
-  )
+  );
 }
