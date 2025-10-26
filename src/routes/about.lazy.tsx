@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/common/components/ui/card'
+import { Separator } from '@/common/components/ui/separator'
 import { Code2, Palette, Globe, Zap } from 'lucide-react'
 
 export const Route = createLazyFileRoute('/about')({

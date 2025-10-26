@@ -1,6 +1,5 @@
-import { useAuthStore } from "../store/authStore";
-import { authApi } from "../lib/api";
-import { Button } from "./ui/button/button";
+import { useLogout } from "@/use-cases/auth/useLogout";
+import { Button } from "./components/ui/button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,24 +7,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { useQueryClient } from "@tanstack/react-query";
+} from "./components/ui/dropdown-menu";
+import { useGetProfile } from "@/use-cases/auth/useGetProfile";
 
 export function UserMenu() {
-  const { user, clearAuth } = useAuthStore();
-  const queryClient = useQueryClient();
+  const { mutate: logout } = useLogout();
+  const { profile } = useGetProfile();
 
-  if (!user) return null;
+  if (!profile) return null;
 
   const handleLogout = async () => {
-    try {
-      await authApi.logout();
-      clearAuth();
-      queryClient.clear();
-    } catch (error) {
-      console.error("Logout failed:", error);
-      clearAuth();
-    }
+   logout();
   };
 
   const getRoleBadge = (role: string) => {
@@ -40,18 +32,18 @@ export function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-          {user.avatar ? (
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
+          {profile.avatar ? (
             <img
-              src={user.avatar}
-              alt={user.firstName}
-              className="h-10 w-10 rounded-full"
+              src={profile.avatar}
+              alt={profile.firstName}
+              className="h-10 w-10 rounded-full object-cover"
             />
           ) : (
             <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
               <span className="text-lg font-semibold">
-                {user.firstName?.[0]?.toUpperCase() ||
-                  user.email[0].toUpperCase()}
+                {profile.firstName?.[0]?.toUpperCase() ||
+                  profile.email[0].toUpperCase()}
               </span>
             </div>
           )}
@@ -61,17 +53,17 @@ export function UserMenu() {
         <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {user.firstName} {user.lastName}
+              {profile.firstName} {profile.lastName}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {user.email}
+              {profile.email}
             </p>
             <span
               className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-1 ${getRoleBadge(
-                user.role
+                profile.role
               )}`}
             >
-              {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+              {profile.role.charAt(0).toUpperCase() + profile.role.slice(1)}
             </span>
           </div>
         </DropdownMenuLabel>

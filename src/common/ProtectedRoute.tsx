@@ -1,6 +1,6 @@
 import { Navigate } from "@tanstack/react-router";
-import { useAuthStore } from "../store/authStore";
 import type { ReactNode } from "react";
+import { useGetProfile } from "@/use-cases/auth/useGetProfile";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -11,13 +11,13 @@ export function ProtectedRoute({
   children,
   allowedRoles,
 }: ProtectedRouteProps) {
-  const { isAuthenticated, user } = useAuthStore();
+  const { profile } = useGetProfile();
 
-  if (!isAuthenticated) {
+  if (!profile) {
     return <Navigate to="/" />;
   }
 
-  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
+  if (allowedRoles && profile && !allowedRoles.includes(profile.role)) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">

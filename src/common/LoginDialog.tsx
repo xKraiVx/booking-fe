@@ -1,4 +1,4 @@
-import { Button } from "./ui/button/button";
+import { Button } from "./components/ui/button/button";
 import {
   Dialog,
   DialogContent,
@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "./components/ui/dialog";
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../lib/config";
 
 export function LoginDialog() {

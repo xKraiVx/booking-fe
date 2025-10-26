@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { AuthCallback } from "../../components/AuthCallback";
+import AuthCallbackPage from "@/pages/auth-callback/AuthCallbackPage";
 
 export const Route = createLazyFileRoute("/auth/callback")({
-  component: AuthCallback,
+  component: AuthCallbackPage,
 });
