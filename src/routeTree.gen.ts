@@ -12,10 +12,16 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 
+const UsersLazyRouteImport = createFileRoute('/users')()
 const AboutLazyRouteImport = createFileRoute('/about')()
 const IndexLazyRouteImport = createFileRoute('/')()
 const AuthCallbackLazyRouteImport = createFileRoute('/auth/callback')()
 
+const UsersLazyRoute = UsersLazyRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/users.lazy').then((d) => d.Route))
 const AboutLazyRoute = AboutLazyRouteImport.update({
   id: '/about',
   path: '/about',
@@ -35,35 +41,46 @@ const AuthCallbackLazyRoute = AuthCallbackLazyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
+  '/users': typeof UsersLazyRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
+  '/users': typeof UsersLazyRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
+  '/users': typeof UsersLazyRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/auth/callback'
+  fullPaths: '/' | '/about' | '/users' | '/auth/callback'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/auth/callback'
-  id: '__root__' | '/' | '/about' | '/auth/callback'
+  to: '/' | '/about' | '/users' | '/auth/callback'
+  id: '__root__' | '/' | '/about' | '/users' | '/auth/callback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AboutLazyRoute: typeof AboutLazyRoute
+  UsersLazyRoute: typeof UsersLazyRoute
   AuthCallbackLazyRoute: typeof AuthCallbackLazyRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/users': {
+      id: '/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -91,6 +108,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AboutLazyRoute: AboutLazyRoute,
+  UsersLazyRoute: UsersLazyRoute,
   AuthCallbackLazyRoute: AuthCallbackLazyRoute,
 }
 export const routeTree = rootRouteImport

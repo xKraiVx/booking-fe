@@ -4,6 +4,8 @@ import { Button } from "@/common/components/ui/button/button";
 import { Separator } from "@/common/components/ui/separator";
 import { getIsAuthenticated } from "@/common/utils/getIsAuthenticated";
 import { getProfile } from "@/repos/auth";
+import { UserMenu } from "@/common/UserMenu";
+import { LoginDialog } from "@/common/LoginDialog";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -21,6 +23,8 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
+  const { profile } = Route.useRouteContext();
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b">
@@ -46,7 +50,19 @@ function RootComponent() {
                     </Button>
                   )}
                 </Link>
+                {profile?.role === "admin" && (
+                  <Link to="/users">
+                    {({ isActive }: { isActive: boolean }) => (
+                      <Button variant={isActive ? "default" : "ghost"}>
+                        Users
+                      </Button>
+                    )}
+                  </Link>
+                )}
               </div>
+            </div>
+            <div className="flex items-center gap-4">
+              {profile ? <UserMenu /> : <LoginDialog />}
             </div>
           </nav>
         </div>
