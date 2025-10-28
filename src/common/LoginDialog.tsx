@@ -15,6 +15,7 @@ import { login, register } from "../repos/auth";
 import { useAuthStore } from "../store/authStore";
 import { ForgotPasswordDialog } from "./ForgotPasswordDialog";
 import Cookies from "js-cookie";
+import { useRouter } from "@tanstack/react-router";
 
 export function LoginDialog() {
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -26,6 +27,7 @@ export function LoginDialog() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const setAuth = useAuthStore((state) => state.setAuth);
+  const router = useRouter();
 
   const handleSocialLogin = (provider: "google" | "facebook") => {
     const url = provider === "google" ? GOOGLE_AUTH_URL : FACEBOOK_AUTH_URL;
@@ -48,6 +50,9 @@ export function LoginDialog() {
       // Store token and user data
       Cookies.set("auth_token", response.access_token, { expires: 7 });
       setAuth(response.access_token, response.user);
+
+      // Invalidate router to refresh profile
+      router.invalidate();
 
       // Close dialog and reset form
       setIsOpen(false);
