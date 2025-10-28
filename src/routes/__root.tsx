@@ -1,7 +1,7 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Button } from "@/common/components/ui/button/button";
-import { Separator } from "@/common/components/ui/separator";
+import { Separator } from "@/common/components/ui/separator/separator";
 import { getIsAuthenticated } from "@/common/utils/getIsAuthenticated";
 import { getProfile } from "@/repos/auth";
 import { UserMenu } from "@/common/UserMenu";

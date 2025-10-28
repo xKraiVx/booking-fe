@@ -6,16 +6,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/common/components/ui/dialog";
-import { Input } from "@/common/components/ui/input";
-import { Label } from "@/common/components/ui/label";
+} from "@/common/components/ui/dialog/dialog";
+import { Input } from "@/common/components/ui/input/input";
+import { Label } from "@/common/components/ui/label/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/common/components/ui/select";
+} from "@/common/components/ui/select/select";
 import type { User } from "@/lib/api";
 import type { UserRole } from "@/repos/user";
 import { useUpdateUserForm } from "../hooks";

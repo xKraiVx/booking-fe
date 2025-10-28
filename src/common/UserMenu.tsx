@@ -7,7 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./components/ui/dropdown-menu";
+} from "./components/ui/dropdown-menu/dropdown-menu";
 import { useGetProfile } from "@/use-cases/auth/useGetProfile";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 

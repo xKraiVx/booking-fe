@@ -8,8 +8,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/common/components/ui/card";
-import { Separator } from "@/common/components/ui/separator";
+} from "@/common/components/ui/card/card";
+import { Separator } from "@/common/components/ui/separator/separator";
 import {
   Dialog,
   DialogContent,
@@ -18,10 +18,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/common/components/ui/dialog";
-import { Input } from "@/common/components/ui/input";
-import { Label } from "@/common/components/ui/label";
-import { Checkbox } from "@/common/components/ui/checkbox";
+} from "@/common/components/ui/dialog/dialog";
+import { Input } from "@/common/components/ui/input/input";
+import { Label } from "@/common/components/ui/label/label";
+import { Checkbox } from "@/common/components/ui/checkbox/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,14 +29,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/common/components/ui/dropdown-menu";
+} from "@/common/components/ui/dropdown-menu/dropdown-menu";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/common/components/ui/select";
+} from "@/common/components/ui/select/select";
 import { Calendar, Users, Clock } from "lucide-react";
 import { useGetProfile } from "@/use-cases/auth/useGetProfile";
 import { useState, type JSX } from "react";

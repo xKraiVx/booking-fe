@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Button } from "./components/ui/button/button";
-import { Input } from "./components/ui/input";
-import { Label } from "./components/ui/label";
+import { Input } from "./components/ui/input/input";
+import { Label } from "./components/ui/label/label";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./components/ui/card";
+} from "./components/ui/card/card";
 import { resetPassword } from "../repos/auth";
 
 export function ResetPasswordForm() {

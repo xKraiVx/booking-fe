@@ -1,11 +1,11 @@
 export { Button } from './button/button'
 export { buttonVariants } from './button/buttonVariants'
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './card'
-export { Separator } from './separator'
-export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './dialog'
-export { Label } from './label'
-export { Input } from './input'
-export { Checkbox } from './checkbox'
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './card/card'
+export { Separator } from './separator/separator'
+export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './dialog/dialog'
+export { Label } from './label/label'
+export { Input } from './input/input'
+export { Checkbox } from './checkbox/checkbox'
 export {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -17,7 +17,7 @@ export {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuGroup,
-} from './dropdown-menu'
+} from './dropdown-menu/dropdown-menu'
 export {
   Select,
   SelectGroup,
@@ -27,5 +27,5 @@ export {
   SelectLabel,
   SelectItem,
   SelectSeparator,
-} from './select'
-export { Textarea } from './textarea'
+} from './select/select'
+export { Textarea } from './textarea/textarea'
