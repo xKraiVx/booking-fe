@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "./components/ui/button/button";
 import {
   Dialog,
@@ -7,31 +8,180 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
+import { Input } from "./components/ui/input";
+import { Label } from "./components/ui/label";
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../lib/config";
+import { login, register } from "../repos/auth";
+import { useAuthStore } from "../store/authStore";
+import { ForgotPasswordDialog } from "./ForgotPasswordDialog";
+import Cookies from "js-cookie";
 
 export function LoginDialog() {
+  const [mode, setMode] = useState<"login" | "register">("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const setAuth = useAuthStore((state) => state.setAuth);
+
   const handleSocialLogin = (provider: "google" | "facebook") => {
     const url = provider === "google" ? GOOGLE_AUTH_URL : FACEBOOK_AUTH_URL;
     window.location.href = url;
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      let response;
+      if (mode === "login") {
+        response = await login({ email, password });
+      } else {
+        response = await register({ email, password, firstName, lastName });
+      }
+
+      // Store token and user data
+      Cookies.set("auth_token", response.access_token, { expires: 7 });
+      setAuth(response.access_token, response.user);
+
+      // Close dialog and reset form
+      setIsOpen(false);
+      setEmail("");
+      setPassword("");
+      setFirstName("");
+      setLastName("");
+    } catch (err) {
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(
+        error.response?.data?.message ||
+          "An error occurred. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const toggleMode = () => {
+    setMode(mode === "login" ? "register" : "login");
+    setError("");
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="default">Sign In</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Sign in to your account</DialogTitle>
+          <DialogTitle>
+            {mode === "login" ? "Sign in to your account" : "Create an account"}
+          </DialogTitle>
           <DialogDescription>
-            Choose your preferred sign-in method
+            {mode === "login"
+              ? "Choose your preferred sign-in method"
+              : "Fill in your details to create an account"}
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-4 py-4">
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {mode === "register" && (
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First Name</Label>
+                <Input
+                  id="firstName"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input
+                  id="lastName"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={isLoading}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={isLoading}
+              minLength={8}
+            />
+            {mode === "register" && (
+              <p className="text-xs text-muted-foreground">
+                Must be at least 8 characters with uppercase, lowercase, and number/special character
+              </p>
+            )}
+            {mode === "login" && (
+              <div className="flex justify-end mt-1">
+                <ForgotPasswordDialog />
+              </div>
+            )}
+          </div>
+
+          {error && (
+            <div className="text-sm text-red-600 bg-red-50 p-2 rounded">
+              {error}
+            </div>
+          )}
+
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading
+              ? "Please wait..."
+              : mode === "login"
+              ? "Sign In"
+              : "Create Account"}
+          </Button>
+        </form>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
           <Button
+            type="button"
             onClick={() => handleSocialLogin("google")}
             variant="outline"
             className="w-full"
+            disabled={isLoading}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
               <path
@@ -54,9 +204,11 @@ export function LoginDialog() {
             Continue with Google
           </Button>
           <Button
+            type="button"
             onClick={() => handleSocialLogin("facebook")}
             variant="outline"
             className="w-full"
+            disabled={isLoading}
           >
             <svg
               className="w-5 h-5 mr-2"
@@ -67,6 +219,19 @@ export function LoginDialog() {
             </svg>
             Continue with Facebook
           </Button>
+        </div>
+
+        <div className="text-center text-sm">
+          <button
+            type="button"
+            onClick={toggleMode}
+            className="text-primary hover:underline"
+            disabled={isLoading}
+          >
+            {mode === "login"
+              ? "Don't have an account? Sign up"
+              : "Already have an account? Sign in"}
+          </button>
         </div>
       </DialogContent>
     </Dialog>

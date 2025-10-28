@@ -15,6 +15,9 @@ import { Route as rootRouteImport } from './routes/__root'
 const UsersLazyRouteImport = createFileRoute('/users')()
 const AboutLazyRouteImport = createFileRoute('/about')()
 const IndexLazyRouteImport = createFileRoute('/')()
+const AuthResetPasswordLazyRouteImport = createFileRoute(
+  '/auth/reset-password',
+)()
 const AuthCallbackLazyRouteImport = createFileRoute('/auth/callback')()
 
 const UsersLazyRoute = UsersLazyRouteImport.update({
@@ -32,6 +35,13 @@ const IndexLazyRoute = IndexLazyRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+const AuthResetPasswordLazyRoute = AuthResetPasswordLazyRouteImport.update({
+  id: '/auth/reset-password',
+  path: '/auth/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/auth/reset-password.lazy').then((d) => d.Route),
+)
 const AuthCallbackLazyRoute = AuthCallbackLazyRouteImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
@@ -43,12 +53,14 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutLazyRoute
   '/users': typeof UsersLazyRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
+  '/auth/reset-password': typeof AuthResetPasswordLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/users': typeof UsersLazyRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
+  '/auth/reset-password': typeof AuthResetPasswordLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -56,13 +68,25 @@ export interface FileRoutesById {
   '/about': typeof AboutLazyRoute
   '/users': typeof UsersLazyRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
+  '/auth/reset-password': typeof AuthResetPasswordLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/users' | '/auth/callback'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/users'
+    | '/auth/callback'
+    | '/auth/reset-password'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/users' | '/auth/callback'
-  id: '__root__' | '/' | '/about' | '/users' | '/auth/callback'
+  to: '/' | '/about' | '/users' | '/auth/callback' | '/auth/reset-password'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/users'
+    | '/auth/callback'
+    | '/auth/reset-password'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -70,6 +94,7 @@ export interface RootRouteChildren {
   AboutLazyRoute: typeof AboutLazyRoute
   UsersLazyRoute: typeof UsersLazyRoute
   AuthCallbackLazyRoute: typeof AuthCallbackLazyRoute
+  AuthResetPasswordLazyRoute: typeof AuthResetPasswordLazyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -95,6 +120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/reset-password': {
+      id: '/auth/reset-password'
+      path: '/auth/reset-password'
+      fullPath: '/auth/reset-password'
+      preLoaderRoute: typeof AuthResetPasswordLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/callback': {
       id: '/auth/callback'
       path: '/auth/callback'
@@ -110,6 +142,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutLazyRoute: AboutLazyRoute,
   UsersLazyRoute: UsersLazyRoute,
   AuthCallbackLazyRoute: AuthCallbackLazyRoute,
+  AuthResetPasswordLazyRoute: AuthResetPasswordLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

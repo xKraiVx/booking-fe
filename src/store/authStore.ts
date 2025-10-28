@@ -1,24 +1,36 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import Cookies from 'js-cookie';
+import type { User } from '@/lib/api';
 
 interface AuthState {
   isAuthenticated: boolean;
-  setAuth: (token: string) => void;
+  user: User | null;
+  setAuth: (token: string, user: User) => void;
   clearAuth: () => void;
 }
 
-export const useAuthStore = create<AuthState>()((set) => ({
-  isAuthenticated: false,
-  setAuth: (token) => {
-    Cookies.set('auth_token', token, {
-      expires: 7,
-      sameSite: 'strict',
-      secure: true,
-    });
-    set({ isAuthenticated: true });
-  },
-  clearAuth: () => {
-    Cookies.remove('auth_token');
-    set({ isAuthenticated: false });
-  },
-}));
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      isAuthenticated: false,
+      user: null,
+      setAuth: (token, user) => {
+        Cookies.set('auth_token', token, {
+          expires: 7,
+          sameSite: 'strict',
+          secure: true,
+        });
+        set({ isAuthenticated: true, user });
+      },
+      clearAuth: () => {
+        Cookies.remove('auth_token');
+        set({ isAuthenticated: false, user: null });
+      },
+    }),
+    {
+      name: 'auth-storage',
+      partialize: (state) => ({ user: state.user }),
+    }
+  )
+);

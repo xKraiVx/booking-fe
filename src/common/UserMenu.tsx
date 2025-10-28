@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
 import { useGetProfile } from "@/use-cases/auth/useGetProfile";
+import { ChangePasswordDialog } from "./ChangePasswordDialog";
 
 export function UserMenu() {
   const { mutate: logout } = useLogout();
@@ -68,6 +69,13 @@ export function UserMenu() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <ChangePasswordDialog
+          trigger={
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              Change Password
+            </DropdownMenuItem>
+          }
+        />
         <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
