@@ -40,7 +40,7 @@ import {
 import { Calendar, Users, Clock } from "lucide-react";
 import { useGetProfile } from "@/use-cases/auth/useGetProfile";
 import { useState, type JSX } from "react";
-import { UserMenu } from "@/common/UserMenu";
+import { UserMenu } from "@/features/user-menu/components/UserMenu";
 import { LoginDialog } from "@/common/LoginDialog";
 
 export default function HomePage(): JSX.Element {

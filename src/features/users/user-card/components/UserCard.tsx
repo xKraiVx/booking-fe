@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/common/components/ui/dropdown-menu/dropdown-menu";
+import { Avatar } from "@/common/components/ui/avatar/avatar";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import type { User } from "@/lib/api";
 import type { UserRole } from "@/repos/user";
@@ -49,20 +50,15 @@ export const UserCard = ({
       <CardHeader>
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-3">
-            {user.avatar ? (
-              <img
-                src={user.avatar}
-                alt={`${user.firstName} ${user.lastName}`}
-                className="w-12 h-12 rounded-full"
-              />
-            ) : (
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-lg font-semibold">
-                  {user.firstName[0]}
-                  {user.lastName[0]}
-                </span>
-              </div>
-            )}
+            <Avatar
+              src={user.avatar}
+              alt={`${user.firstName} ${user.lastName}`}
+              fallbackText={
+                user.firstName?.[0]?.toUpperCase() ||
+                user.email[0].toUpperCase()
+              }
+              size="lg"
+            />
             <div>
               <CardTitle className="text-lg">
                 {user.firstName} {user.lastName}

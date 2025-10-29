@@ -4,7 +4,7 @@ import { Button } from "@/common/components/ui/button/button";
 import { Separator } from "@/common/components/ui/separator/separator";
 import { getIsAuthenticated } from "@/common/utils/getIsAuthenticated";
 import { getProfile } from "@/repos/auth";
-import { UserMenu } from "@/common/UserMenu";
+import { UserMenu } from "@/features/user-menu/components/UserMenu";
 import { LoginDialog } from "@/common/LoginDialog";
 
 export const Route = createRootRoute({

@@ -1,5 +1,5 @@
 import { useLogout } from "@/use-cases/auth/useLogout";
-import { Button } from "./components/ui/button/button";
+import { Button } from "../../../common/components/ui/button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,9 +7,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./components/ui/dropdown-menu/dropdown-menu";
+} from "../../../common/components/ui/dropdown-menu/dropdown-menu";
+import { Avatar } from "../../../common/components/ui/avatar/avatar";
 import { useGetProfile } from "@/use-cases/auth/useGetProfile";
-import { ChangePasswordDialog } from "./ChangePasswordDialog";
+import { ChangePasswordDialog } from "../../../common/ChangePasswordDialog";
 
 export function UserMenu() {
   const { mutate: logout } = useLogout();
@@ -34,20 +35,15 @@ export function UserMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
-          {profile.avatar ? (
-            <img
-              src={profile.avatar}
-              alt={profile.firstName}
-              className="h-10 w-10 rounded-full object-cover"
-            />
-          ) : (
-            <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-              <span className="text-lg font-semibold">
-                {profile.firstName?.[0]?.toUpperCase() ||
-                  profile.email[0].toUpperCase()}
-              </span>
-            </div>
-          )}
+          <Avatar
+            src={profile.avatar}
+            alt={profile.firstName}
+            fallbackText={
+              profile.firstName?.[0]?.toUpperCase() ||
+              profile.email[0].toUpperCase()
+            }
+            size="md"
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end">

@@ -1,3 +1,4 @@
+export { Avatar } from './avatar/avatar'
 export { Button } from './button/button'
 export { buttonVariants } from './button/buttonVariants'
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './card/card'
