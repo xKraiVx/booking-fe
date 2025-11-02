@@ -10,7 +10,7 @@ import {
 } from "./components/ui/dialog/dialog";
 import { Input } from "./components/ui/input/input";
 import { Label } from "./components/ui/label/label";
-import { forgotPassword } from "../repos/auth";
+import { forgotPassword } from "../repos/auth.repo";
 
 export function ForgotPasswordDialog() {
   const [email, setEmail] = useState("");
@@ -29,7 +29,7 @@ export function ForgotPasswordDialog() {
       const response = await forgotPassword({ email });
       setSuccess(response.message);
       setEmail("");
-      
+
       // Close dialog after 3 seconds
       setTimeout(() => {
         setIsOpen(false);
@@ -38,8 +38,7 @@ export function ForgotPasswordDialog() {
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } };
       setError(
-        error.response?.data?.message ||
-          "An error occurred. Please try again."
+        error.response?.data?.message || "An error occurred. Please try again.",
       );
     } finally {
       setIsLoading(false);

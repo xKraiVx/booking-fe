@@ -1,7 +1,7 @@
 import { useForm } from "@tanstack/react-form";
 import { useUpdateUser } from "@/use-cases/user/useUpdateUser";
 import type { User } from "@/lib/api";
-import type { UpdateUserDto, UserRole } from "@/repos/user";
+import type { UpdateUserDto, UserRole } from "@/repos/user.repo";
 
 interface UseUpdateUserFormProps {
   user: User;

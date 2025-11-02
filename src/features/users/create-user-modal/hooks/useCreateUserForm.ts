@@ -1,6 +1,6 @@
 import { useForm } from "@tanstack/react-form";
 import { useCreateUser } from "@/use-cases/user/useCreateUser";
-import type { CreateUserDto, UserRole } from "@/repos/user";
+import type { CreateUserDto, UserRole } from "@/repos/user.repo";
 
 interface UseCreateUserFormProps {
   onSuccess?: () => void;

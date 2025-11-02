@@ -10,7 +10,7 @@ import {
 } from "./components/ui/dialog/dialog";
 import { Input } from "./components/ui/input/input";
 import { Label } from "./components/ui/label/label";
-import { changePassword } from "../repos/auth";
+import { changePassword } from "../repos/auth.repo";
 
 interface ChangePasswordDialogProps {
   trigger?: React.ReactNode;
@@ -52,8 +52,7 @@ export function ChangePasswordDialog({ trigger }: ChangePasswordDialogProps) {
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } };
       setError(
-        error.response?.data?.message ||
-          "An error occurred. Please try again."
+        error.response?.data?.message || "An error occurred. Please try again.",
       );
     } finally {
       setIsLoading(false);

@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import Cookies from "js-cookie";
 import type { JSX } from "react";
 import { useAuthStore } from "@/store/authStore";
-import { getProfile } from "@/repos/auth";
+import { getProfile } from "@/repos/auth.repo";
 import Loader from "@/common/Loader";
 
 export default function AuthCallbackPage(): JSX.Element {
@@ -18,7 +18,7 @@ export default function AuthCallbackPage(): JSX.Element {
       if (token) {
         // Store token temporarily
         Cookies.set("auth_token", token, { expires: 7 });
-        
+
         try {
           // Fetch user profile
           const user = await getProfile();
@@ -28,7 +28,7 @@ export default function AuthCallbackPage(): JSX.Element {
           Cookies.remove("auth_token");
         }
       }
-      
+
       navigate({ to: "/" });
     };
 

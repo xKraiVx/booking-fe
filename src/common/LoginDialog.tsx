@@ -11,7 +11,7 @@ import {
 import { Input } from "./components/ui/input/input";
 import { Label } from "./components/ui/label/label";
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../lib/config";
-import { login, register } from "../repos/auth";
+import { login, register } from "../repos/auth.repo";
 import { useAuthStore } from "../store/authStore";
 import { ForgotPasswordDialog } from "./ForgotPasswordDialog";
 import Cookies from "js-cookie";
@@ -63,8 +63,7 @@ export function LoginDialog() {
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } };
       setError(
-        error.response?.data?.message ||
-          "An error occurred. Please try again."
+        error.response?.data?.message || "An error occurred. Please try again.",
       );
     } finally {
       setIsLoading(false);
@@ -144,7 +143,8 @@ export function LoginDialog() {
             />
             {mode === "register" && (
               <p className="text-xs text-muted-foreground">
-                Must be at least 8 characters with uppercase, lowercase, and number/special character
+                Must be at least 8 characters with uppercase, lowercase, and
+                number/special character
               </p>
             )}
             {mode === "login" && (
@@ -164,8 +164,8 @@ export function LoginDialog() {
             {isLoading
               ? "Please wait..."
               : mode === "login"
-              ? "Sign In"
-              : "Create Account"}
+                ? "Sign In"
+                : "Create Account"}
           </Button>
         </form>
 

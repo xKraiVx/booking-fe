@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/common/components/ui/select/select";
-import type { UserRole } from "@/repos/user";
+import type { UserRole } from "@/repos/user.repo";
 import { useCreateUserForm } from "../hooks";
 
 interface CreateUserModalProps {
@@ -143,7 +143,9 @@ export const CreateUserModal = ({
                   <Label htmlFor="role">Role *</Label>
                   <Select
                     value={field.state.value}
-                    onValueChange={(value) => field.handleChange(value as UserRole)}
+                    onValueChange={(value) =>
+                      field.handleChange(value as UserRole)
+                    }
                     required
                   >
                     <SelectTrigger>

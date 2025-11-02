@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./components/ui/card/card";
-import { resetPassword } from "../repos/auth";
+import { resetPassword } from "../repos/auth.repo";
 
 export function ResetPasswordForm() {
   const navigate = useNavigate();
@@ -48,8 +48,7 @@ export function ResetPasswordForm() {
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } };
       setError(
-        error.response?.data?.message ||
-          "An error occurred. Please try again."
+        error.response?.data?.message || "An error occurred. Please try again.",
       );
     } finally {
       setIsLoading(false);
@@ -74,9 +73,7 @@ export function ResetPasswordForm() {
     <Card className="w-full max-w-md mx-auto mt-8">
       <CardHeader>
         <CardTitle>Reset Your Password</CardTitle>
-        <CardDescription>
-          Enter your new password below
-        </CardDescription>
+        <CardDescription>Enter your new password below</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">

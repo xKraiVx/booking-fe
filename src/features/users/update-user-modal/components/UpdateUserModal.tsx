@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/common/components/ui/select/select";
 import type { User } from "@/lib/api";
-import type { UserRole } from "@/repos/user";
+import type { UserRole } from "@/repos/user.repo";
 import { useUpdateUserForm } from "../hooks";
 
 interface UpdateUserModalProps {
@@ -122,7 +122,9 @@ export const UpdateUserModal = ({
                   <Label htmlFor="edit-role">Role *</Label>
                   <Select
                     value={field.state.value}
-                    onValueChange={(value) => field.handleChange(value as UserRole)}
+                    onValueChange={(value) =>
+                      field.handleChange(value as UserRole)
+                    }
                     required
                   >
                     <SelectTrigger>

@@ -1,4 +1,25 @@
 {
-  "rules": {},
+  "rules": {
+    "quotes": [2, "double", { "avoidEscape": true }],
+    "semi": [2, "always"],
+    "comma-dangle": [2, "always-multiline"],
+    "object-curly-spacing": [2, "always"],
+    "array-bracket-spacing": [2, "never"],
+    "arrow-parens": [2, "always"],
+    "indent": [2, 2, { "SwitchCase": 1 }],
+    "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
+    "keyword-spacing": [2, { "before": true, "after": true }],
+    "space-before-blocks": [2, { "always": true }],
+    "space-infix-ops": [2, { "int32Hint": false }],
+    "spaced-comment": [2, "always", { "exceptions": ["-", "+"] }],
+    "no-trailing-spaces": 2,
+    "eol-last": [2, "always"],
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "comma-spacing": [2, { "before": false, "after": true }],
+    "no-multiple-empty-lines": [2, { "max": 1, "maxEOF": 1 }],
+    "computed-property-spacing": [2, "never"],
+    "block-spacing": [2, "always"],
+    "arrow-spacing": [2, { "before": true, "after": true }]
+  },
   "ignore": ["node_modules", "dist", "build", "src/routeTree.gen.ts"]
 }

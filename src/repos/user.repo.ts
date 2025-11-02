@@ -1,5 +1,13 @@
-import type { User } from "@/lib/api";
 import api from "@/lib/api";
+
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatar?: string;
+  role: 'admin' | 'tenant' | 'client';
+}
 
 export const UserRole = {
     ADMIN: 'admin',

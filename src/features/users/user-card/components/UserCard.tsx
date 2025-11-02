@@ -17,7 +17,7 @@ import {
 import { Avatar } from "@/common/components/ui/avatar/avatar";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import type { User } from "@/lib/api";
-import type { UserRole } from "@/repos/user";
+import type { UserRole } from "@/repos/user.repo";
 
 interface UserCardProps {
   user: User;
@@ -119,7 +119,7 @@ export const UserCard = ({
             <span className="text-muted-foreground">Role:</span>
             <span
               className={`px-2 py-1 rounded-full text-xs font-medium ${getRoleBadgeClass(
-                user.role
+                user.role,
               )}`}
             >
               {user.role}
