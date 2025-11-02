@@ -1,36 +1,17 @@
 import api from "@/lib/api";
-import type { User } from "@/repos/user.repo";
+import type { RequestBody, ResponseData } from "@/lib/api-types";
 
-export interface AuthResponse {
-  access_token: string;
-  user: User;
-}
+type RegisterResponse = ResponseData<"/auth/register", "post", 201>;
+type LoginResponse = ResponseData<"/auth/login", "post", 200>;
+type GetProfileResponse = ResponseData<"/auth/profile", "get", 200>;
 
-export interface RegisterData {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
+type RegisterData = RequestBody<"/auth/register", "post">;
+type LoginData = RequestBody<"/auth/login", "post">;
+type ForgotPasswordData = RequestBody<"/auth/forgot-password", "post">;
+type ResetPasswordData = RequestBody<"/auth/reset-password", "post">;
+type ChangePasswordData = RequestBody<"/auth/change-password", "post">;
 
-export interface LoginData {
-  email: string;
-  password: string;
-}
-
-export interface ForgotPasswordData {
-  email: string;
-}
-
-export interface ResetPasswordData {
-  token: string;
-  newPassword: string;
-}
-
-export interface ChangePasswordData {
-  currentPassword: string;
-  newPassword: string;
-}
+type AuthResponse = RegisterResponse & LoginResponse;
 
 export const register = async (data: RegisterData): Promise<AuthResponse> => {
   const response = await api.post<AuthResponse>("/auth/register", data);
@@ -72,8 +53,8 @@ export const changePassword = async (
   return response.data;
 };
 
-export const getProfile = async (): Promise<User> => {
-  const response = await api.get<User>("/auth/profile");
+export const getProfile = async (): Promise<GetProfileResponse> => {
+  const response = await api.get<GetProfileResponse>("/auth/profile");
   return response.data;
 };
 
