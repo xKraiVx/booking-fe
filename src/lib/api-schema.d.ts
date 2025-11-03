@@ -296,6 +296,117 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/business-settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all business settings (Admin: all, Tenant: own) */
+        get: operations["BusinessSettingsController_findAll"];
+        put?: never;
+        /** Create business settings (Tenant only) */
+        post: operations["BusinessSettingsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/business-settings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get business settings by ID */
+        get: operations["BusinessSettingsController_findOne"];
+        /** Update business settings */
+        put: operations["BusinessSettingsController_update"];
+        post?: never;
+        /** Delete business settings */
+        delete: operations["BusinessSettingsController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/interventions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all interventions (Admin: all, Tenant: own) */
+        get: operations["InterventionController_findAll"];
+        put?: never;
+        /** Create intervention/service (Tenant only) */
+        post: operations["InterventionController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/interventions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get intervention by ID */
+        get: operations["InterventionController_findOne"];
+        /** Update intervention */
+        put: operations["InterventionController_update"];
+        post?: never;
+        /** Delete intervention */
+        delete: operations["InterventionController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/masters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all masters (Admin: all, Tenant: own) */
+        get: operations["MasterController_findAll"];
+        put?: never;
+        /** Create master (Tenant only) */
+        post: operations["MasterController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/masters/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get master by ID */
+        get: operations["MasterController_findOne"];
+        /** Update master */
+        put: operations["MasterController_update"];
+        post?: never;
+        /** Delete master */
+        delete: operations["MasterController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -493,6 +604,368 @@ export interface components {
              * @example true
              */
             isActive?: boolean;
+        };
+        WorkingHoursDto: {
+            /**
+             * @description Day of the week
+             * @example Monday
+             */
+            day: string;
+            /**
+             * @description Opening time
+             * @example 09:00
+             */
+            openTime: string;
+            /**
+             * @description Closing time
+             * @example 18:00
+             */
+            closeTime: string;
+            /**
+             * @description Whether the business is closed on this day
+             * @example false
+             */
+            isClosed?: boolean;
+        };
+        SocialLinksDto: {
+            /**
+             * @description Facebook URL
+             * @example https://facebook.com/business
+             */
+            facebook?: string;
+            /**
+             * @description Instagram URL
+             * @example https://instagram.com/business
+             */
+            instagram?: string;
+            /**
+             * @description Twitter URL
+             * @example https://twitter.com/business
+             */
+            twitter?: string;
+            /**
+             * @description LinkedIn URL
+             * @example https://linkedin.com/company/business
+             */
+            linkedin?: string;
+            /**
+             * @description Website URL
+             * @example https://business.com
+             */
+            website?: string;
+        };
+        CreateBusinessSettingsDto: {
+            /**
+             * @description Business title
+             * @example Beauty Salon & Spa
+             */
+            title: string;
+            /**
+             * @description Business description
+             * @example Professional beauty services in the heart of the city
+             */
+            description?: string;
+            /**
+             * @description Business address
+             * @example 123 Main Street, Warsaw, Poland
+             */
+            address?: string;
+            /**
+             * @description Working hours for each day of the week
+             * @example [
+             *       {
+             *         "day": "Monday",
+             *         "openTime": "09:00",
+             *         "closeTime": "18:00",
+             *         "isClosed": false
+             *       },
+             *       {
+             *         "day": "Tuesday",
+             *         "openTime": "09:00",
+             *         "closeTime": "18:00",
+             *         "isClosed": false
+             *       }
+             *     ]
+             */
+            workingHours: components["schemas"]["WorkingHoursDto"][];
+            /**
+             * @description Google Calendar integration ID
+             * @example calendar@example.com
+             */
+            googleCalendarId?: string;
+            /** @description Social media links */
+            socialLinks?: components["schemas"]["SocialLinksDto"];
+        };
+        BusinessSettingsDto: {
+            /**
+             * @description Business settings unique identifier
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
+             * @description Tenant user ID
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            userId: string;
+            /**
+             * @description Business title
+             * @example Beauty Salon & Spa
+             */
+            title: string;
+            /**
+             * @description Business description
+             * @example Professional beauty services in the heart of the city
+             */
+            description?: string;
+            /**
+             * @description Business address
+             * @example 123 Main Street, Warsaw, Poland
+             */
+            address?: string;
+            /** @description Working hours for each day of the week */
+            workingHours: components["schemas"]["WorkingHoursDto"][];
+            /**
+             * @description Google Calendar integration ID
+             * @example calendar@example.com
+             */
+            googleCalendarId?: string;
+            /** @description Social media links */
+            socialLinks?: components["schemas"]["SocialLinksDto"];
+        };
+        UpdateBusinessSettingsDto: {
+            /**
+             * @description Business title
+             * @example Beauty Salon & Spa
+             */
+            title?: string;
+            /**
+             * @description Business description
+             * @example Professional beauty services in the heart of the city
+             */
+            description?: string;
+            /**
+             * @description Business address
+             * @example 123 Main Street, Warsaw, Poland
+             */
+            address?: string;
+            /** @description Working hours for each day of the week */
+            workingHours?: components["schemas"]["WorkingHoursDto"][];
+            /**
+             * @description Google Calendar integration ID
+             * @example calendar@example.com
+             */
+            googleCalendarId?: string;
+            /** @description Social media links */
+            socialLinks?: components["schemas"]["SocialLinksDto"];
+        };
+        CreateInterventionDto: {
+            /**
+             * @description Intervention/service name
+             * @example Classic Manicure
+             */
+            name: string;
+            /**
+             * @description Price of the service
+             * @example 50
+             */
+            price: number;
+            /**
+             * @description Currency
+             * @default PLN
+             * @example PLN
+             * @enum {string}
+             */
+            currency: "PLN" | "USD" | "EUR" | "GBP";
+            /**
+             * @description Service images URLs
+             * @example [
+             *       "https://example.com/image1.jpg",
+             *       "https://example.com/image2.jpg"
+             *     ]
+             */
+            images?: string[];
+            /**
+             * @description Duration of the service in minutes
+             * @example 60
+             */
+            duration: number;
+            /**
+             * @description Service description
+             * @example Professional manicure with nail polish of your choice
+             */
+            description?: string;
+            /**
+             * @description Array of master IDs who can perform this service
+             * @example [
+             *       "123e4567-e89b-12d3-a456-426614174000"
+             *     ]
+             */
+            masterIds?: string[];
+        };
+        InterventionDto: {
+            /**
+             * @description Intervention unique identifier
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
+             * @description Business settings ID
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            businessSettingsId: string;
+            /**
+             * @description Intervention/service name
+             * @example Classic Manicure
+             */
+            name: string;
+            /**
+             * @description Price of the service
+             * @example 50
+             */
+            price: number;
+            /**
+             * @description Currency
+             * @example PLN
+             * @enum {string}
+             */
+            currency: "PLN" | "USD" | "EUR" | "GBP";
+            /**
+             * @description Service images URLs
+             * @example [
+             *       "https://example.com/image1.jpg",
+             *       "https://example.com/image2.jpg"
+             *     ]
+             */
+            images?: string[];
+            /**
+             * @description Duration of the service in minutes
+             * @example 60
+             */
+            duration: number;
+            /**
+             * @description Service description
+             * @example Professional manicure with nail polish of your choice
+             */
+            description?: string;
+        };
+        UpdateInterventionDto: {
+            /**
+             * @description Intervention/service name
+             * @example Classic Manicure
+             */
+            name?: string;
+            /**
+             * @description Price of the service
+             * @example 50
+             */
+            price?: number;
+            /**
+             * @description Currency
+             * @example PLN
+             * @enum {string}
+             */
+            currency?: "PLN" | "USD" | "EUR" | "GBP";
+            /**
+             * @description Service images URLs
+             * @example [
+             *       "https://example.com/image1.jpg",
+             *       "https://example.com/image2.jpg"
+             *     ]
+             */
+            images?: string[];
+            /**
+             * @description Duration of the service in minutes
+             * @example 60
+             */
+            duration?: number;
+            /**
+             * @description Service description
+             * @example Professional manicure with nail polish of your choice
+             */
+            description?: string;
+            /**
+             * @description Array of master IDs who can perform this service
+             * @example [
+             *       "123e4567-e89b-12d3-a456-426614174000"
+             *     ]
+             */
+            masterIds?: string[];
+        };
+        CreateMasterDto: {
+            /**
+             * @description Master name
+             * @example Anna Kowalska
+             */
+            name: string;
+            /**
+             * @description Master date of birth
+             * @example 1990-05-15
+             */
+            dateOfBirth?: string;
+            /**
+             * @description Master photo URL
+             * @example https://example.com/masters/anna.jpg
+             */
+            photo?: string;
+            /**
+             * @description Master description/bio
+             * @example Experienced nail technician with 10+ years of experience
+             */
+            description?: string;
+        };
+        MasterDto: {
+            /**
+             * @description Master unique identifier
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
+             * @description Business settings ID
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            businessSettingsId: string;
+            /**
+             * @description Master name
+             * @example Anna Kowalska
+             */
+            name: string;
+            /**
+             * @description Master date of birth
+             * @example 1990-05-15
+             */
+            dateOfBirth?: string;
+            /**
+             * @description Master photo URL
+             * @example https://example.com/masters/anna.jpg
+             */
+            photo?: string;
+            /**
+             * @description Master description/bio
+             * @example Experienced nail technician with 10+ years of experience
+             */
+            description?: string;
+        };
+        UpdateMasterDto: {
+            /**
+             * @description Master name
+             * @example Anna Kowalska
+             */
+            name?: string;
+            /**
+             * @description Master date of birth
+             * @example 1990-05-15
+             */
+            dateOfBirth?: string;
+            /**
+             * @description Master photo URL
+             * @example https://example.com/masters/anna.jpg
+             */
+            photo?: string;
+            /**
+             * @description Master description/bio
+             * @example Experienced nail technician with 10+ years of experience
+             */
+            description?: string;
         };
     };
     responses: never;
@@ -1175,6 +1648,603 @@ export interface operations {
                 content?: never;
             };
             /** @description Audit log not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BusinessSettingsController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns list of business settings */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessSettingsDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BusinessSettingsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateBusinessSettingsDto"];
+            };
+        };
+        responses: {
+            /** @description Business settings created successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessSettingsDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BusinessSettingsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Business settings ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns business settings details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessSettingsDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Business settings not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BusinessSettingsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Business settings ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateBusinessSettingsDto"];
+            };
+        };
+        responses: {
+            /** @description Business settings updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessSettingsDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Business settings not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BusinessSettingsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Business settings ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Business settings deleted successfully */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Business settings not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    InterventionController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns list of interventions */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InterventionDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    InterventionController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInterventionDto"];
+            };
+        };
+        responses: {
+            /** @description Intervention created successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InterventionDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    InterventionController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Intervention ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns intervention details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InterventionDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Intervention not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    InterventionController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Intervention ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateInterventionDto"];
+            };
+        };
+        responses: {
+            /** @description Intervention updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InterventionDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Intervention not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    InterventionController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Intervention ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Intervention deleted successfully */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Intervention not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MasterController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns list of masters */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MasterDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MasterController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateMasterDto"];
+            };
+        };
+        responses: {
+            /** @description Master created successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MasterDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MasterController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Master ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns master details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MasterDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Master not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MasterController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Master ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateMasterDto"];
+            };
+        };
+        responses: {
+            /** @description Master updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MasterDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Master not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MasterController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Master ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Master deleted successfully */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Master not found */
             404: {
                 headers: {
                     [name: string]: unknown;

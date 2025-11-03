@@ -3,7 +3,7 @@ import type { RequestBody, ResponseData } from "@/lib/api-types";
 
 type RegisterResponse = ResponseData<"/auth/register", "post", 201>;
 type LoginResponse = ResponseData<"/auth/login", "post", 200>;
-type GetProfileResponse = ResponseData<"/auth/profile", "get", 200>;
+export type GetProfileResponse = ResponseData<"/auth/profile", "get", 200>;
 
 type RegisterData = RequestBody<"/auth/register", "post">;
 type LoginData = RequestBody<"/auth/login", "post">;

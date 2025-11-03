@@ -1,12 +1,12 @@
-import type { User } from "@/lib/api";
 import { Button } from "@/common/components/ui/button/button";
 import { Separator } from "@/common/components/ui/separator/separator";
 import { UserMenu } from "@/features/user-menu/components/UserMenu";
 import { LoginDialog } from "@/common/LoginDialog";
 import { Link } from "@tanstack/react-router";
+import type { GetProfileResponse } from "@/repos/auth.repo";
 
 interface RootLayoutNavigationProps {
-  profile: User | null;
+  profile: GetProfileResponse | null;
 }
 
 export default function RootLayoutNavigation({
@@ -42,6 +42,15 @@ export default function RootLayoutNavigation({
                 )}
               </Link>
             </>
+          )}
+          {profile?.role === "tenant" && (
+            <Link to="/business-settings">
+              {({ isActive }: { isActive: boolean }) => (
+                <Button variant={isActive ? "default" : "ghost"}>
+                  Business Settings
+                </Button>
+              )}
+            </Link>
           )}
         </div>
       </div>
