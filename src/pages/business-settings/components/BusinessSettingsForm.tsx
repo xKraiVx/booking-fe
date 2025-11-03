@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useForm } from "@tanstack/react-form";
 import { Button } from "@/common/components/ui/button/button";
 import { Input } from "@/common/components/ui/input/input";
 import { Label } from "@/common/components/ui/label/label";
 import { Textarea } from "@/common/components/ui/textarea/textarea";
+import { Checkbox } from "@/common/components/ui/checkbox/checkbox";
 import {
   useCreateBusinessSettings,
   useUpdateBusinessSettings,
@@ -52,6 +54,21 @@ export const BusinessSettingsForm = ({
   const createMutation = useCreateBusinessSettings();
   const updateMutation = useUpdateBusinessSettings();
 
+  // Manage working hours state
+  const [workingHours, setWorkingHours] = useState<WorkingHours[]>(
+    businessSettings?.workingHours || DEFAULT_WORKING_HOURS,
+  );
+
+  const updateWorkingHour = (
+    index: number,
+    field: keyof WorkingHours,
+    value: string | boolean,
+  ) => {
+    const updated = [...workingHours];
+    updated[index] = { ...updated[index], [field]: value };
+    setWorkingHours(updated);
+  };
+
   const form = useForm({
     defaultValues: {
       title: businessSettings?.title || "",
@@ -77,7 +94,7 @@ export const BusinessSettingsForm = ({
         title: value.title,
         description: value.description || undefined,
         address: value.address || undefined,
-        workingHours: businessSettings?.workingHours || DEFAULT_WORKING_HOURS,
+        workingHours: workingHours,
         googleCalendarId: value.googleCalendarId || undefined,
         socialLinks: Object.values(socialLinks).some((v) => v)
           ? socialLinks
@@ -160,6 +177,53 @@ export const BusinessSettingsForm = ({
           </div>
         )}
       </form.Field>
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Working Hours</h3>
+        <div className="space-y-3">
+          {workingHours.map((hours, index) => (
+            <div
+              key={hours.day}
+              className="grid grid-cols-[120px_1fr_1fr_auto] md:grid-cols-[140px_1fr_1fr_auto] gap-3 items-center"
+            >
+              <Label className="font-medium">{hours.day}</Label>
+              <Input
+                type="time"
+                value={hours.openTime}
+                onChange={(e) =>
+                  updateWorkingHour(index, "openTime", e.target.value)
+                }
+                disabled={hours.isClosed}
+                className="text-sm"
+              />
+              <Input
+                type="time"
+                value={hours.closeTime}
+                onChange={(e) =>
+                  updateWorkingHour(index, "closeTime", e.target.value)
+                }
+                disabled={hours.isClosed}
+                className="text-sm"
+              />
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id={`closed-${index}`}
+                  checked={hours.isClosed}
+                  onCheckedChange={(checked) =>
+                    updateWorkingHour(index, "isClosed", checked === true)
+                  }
+                />
+                <label
+                  htmlFor={`closed-${index}`}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                  Closed
+                </label>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">Social Media Links</h3>
