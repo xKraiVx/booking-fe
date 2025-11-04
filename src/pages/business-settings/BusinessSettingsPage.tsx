@@ -13,8 +13,8 @@ import {
 import Loader from "@/common/Loader";
 import { BusinessSettingsForm } from "./components/BusinessSettingsForm";
 import { Plus, Users, Scissors } from "lucide-react";
-import { MasterModal } from "@/pages/business-settings/components/MasterModal";
-import { InterventionModal } from "@/pages/business-settings/components/InterventionModal";
+import { MasterModal } from "@/features/master-modal/components/MasterModal";
+import { InterventionModal } from "@/features/intervention-modal/components/InterventionModal";
 
 export const BusinessSettingsPage = () => {
   const [showMasterModal, setShowMasterModal] = useState(false);
