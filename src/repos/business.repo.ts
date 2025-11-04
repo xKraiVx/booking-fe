@@ -165,6 +165,34 @@ export const deleteMaster = async (id: string): Promise<void> => {
   await api.delete(`/masters/${id}`);
 };
 
+// ============ Public API (No Auth Required) ============
+export const getPublicBusinessSettings = async (
+  tenantId: string,
+): Promise<GetBusinessSettingsByIdResponse> => {
+  const response = await api.get<GetBusinessSettingsByIdResponse>(
+    `/business-settings/${tenantId}`,
+  );
+  return response.data;
+};
+
+export const getPublicInterventions = async (
+  businessSettingsId: string,
+): Promise<GetAllInterventionsResponse> => {
+  const response = await api.get<GetAllInterventionsResponse>(
+    `/interventions?businessSettingsId=${businessSettingsId}`,
+  );
+  return response.data;
+};
+
+export const getPublicMasters = async (
+  businessSettingsId: string,
+): Promise<GetAllMastersResponse> => {
+  const response = await api.get<GetAllMastersResponse>(
+    `/masters?businessSettingsId=${businessSettingsId}`,
+  );
+  return response.data;
+};
+
 // Export types for use in components
 export type {
   CreateBusinessSettingsBody,

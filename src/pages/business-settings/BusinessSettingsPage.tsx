@@ -12,7 +12,7 @@ import {
 } from "@/common/components/ui/card/card";
 import Loader from "@/common/Loader";
 import { BusinessSettingsForm } from "./components/BusinessSettingsForm";
-import { Plus, Users, Scissors } from "lucide-react";
+import { Plus, Users, Scissors, ExternalLink, Copy, Check } from "lucide-react";
 import { MasterModal } from "@/features/master-modal/components/MasterModal";
 import { InterventionModal } from "@/features/intervention-modal/components/InterventionModal";
 
@@ -23,6 +23,7 @@ export const BusinessSettingsPage = () => {
   const [editingInterventionId, setEditingInterventionId] = useState<
     string | null
   >(null);
+  const [isCopied, setIsCopied] = useState(false);
 
   const { data: businessSettings, isLoading: isLoadingSettings } =
     useGetAllBusinessSettings();
@@ -54,11 +55,79 @@ export const BusinessSettingsPage = () => {
     setEditingInterventionId(null);
   };
 
+  const handleCopyLink = async () => {
+    if (businessSettings?.[0]?.id) {
+      const publicUrl = `${window.location.origin}/tenant/${businessSettings[0].id}`;
+      try {
+        await navigator.clipboard.writeText(publicUrl);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      } catch (err) {
+        console.error("Failed to copy:", err);
+      }
+    }
+  };
+
+  const handleOpenPublicPage = () => {
+    if (businessSettings?.[0]?.id) {
+      const publicUrl = `${window.location.origin}/tenant/${businessSettings[0].id}`;
+      window.open(publicUrl, "_blank");
+    }
+  };
+
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Business Settings</h1>
       </div>
+
+      {/* Public Page Link Section */}
+      {businessSettings?.[0]?.id && (
+        <Card className="border-blue-200 bg-blue-50/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-blue-900">
+              <ExternalLink className="h-5 w-5" />
+              Public Page
+            </CardTitle>
+            <CardDescription className="text-blue-700">
+              Share your business page with customers
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center gap-2 p-3 bg-white rounded-md border border-blue-200">
+              <code className="flex-1 text-sm text-gray-700 break-all">
+                {`${window.location.origin}/tenant/${businessSettings[0].id}`}
+              </code>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={handleCopyLink}
+                className="flex items-center gap-2"
+              >
+                {isCopied ? (
+                  <>
+                    <Check className="h-4 w-4" />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-4 w-4" />
+                    Copy Link
+                  </>
+                )}
+              </Button>
+              <Button
+                onClick={handleOpenPublicPage}
+                className="flex items-center gap-2"
+              >
+                <ExternalLink className="h-4 w-4" />
+                Open Public Page
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Business Settings Form */}
       <Card>

@@ -11,6 +11,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TenantTenantIdRouteImport } from './routes/tenant/$tenantId'
 
 const UsersLazyRouteImport = createFileRoute('/users')()
 const BusinessSettingsLazyRouteImport = createFileRoute('/business-settings')()
@@ -55,12 +56,18 @@ const AuthCallbackLazyRoute = AuthCallbackLazyRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/auth/callback.lazy').then((d) => d.Route))
+const TenantTenantIdRoute = TenantTenantIdRouteImport.update({
+  id: '/tenant/$tenantId',
+  path: '/tenant/$tenantId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/actions': typeof ActionsLazyRoute
   '/business-settings': typeof BusinessSettingsLazyRoute
   '/users': typeof UsersLazyRoute
+  '/tenant/$tenantId': typeof TenantTenantIdRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
   '/auth/reset-password': typeof AuthResetPasswordLazyRoute
 }
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/actions': typeof ActionsLazyRoute
   '/business-settings': typeof BusinessSettingsLazyRoute
   '/users': typeof UsersLazyRoute
+  '/tenant/$tenantId': typeof TenantTenantIdRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
   '/auth/reset-password': typeof AuthResetPasswordLazyRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/actions': typeof ActionsLazyRoute
   '/business-settings': typeof BusinessSettingsLazyRoute
   '/users': typeof UsersLazyRoute
+  '/tenant/$tenantId': typeof TenantTenantIdRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
   '/auth/reset-password': typeof AuthResetPasswordLazyRoute
 }
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/business-settings'
     | '/users'
+    | '/tenant/$tenantId'
     | '/auth/callback'
     | '/auth/reset-password'
   fileRoutesByTo: FileRoutesByTo
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/business-settings'
     | '/users'
+    | '/tenant/$tenantId'
     | '/auth/callback'
     | '/auth/reset-password'
   id:
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/business-settings'
     | '/users'
+    | '/tenant/$tenantId'
     | '/auth/callback'
     | '/auth/reset-password'
   fileRoutesById: FileRoutesById
@@ -113,6 +125,7 @@ export interface RootRouteChildren {
   ActionsLazyRoute: typeof ActionsLazyRoute
   BusinessSettingsLazyRoute: typeof BusinessSettingsLazyRoute
   UsersLazyRoute: typeof UsersLazyRoute
+  TenantTenantIdRoute: typeof TenantTenantIdRoute
   AuthCallbackLazyRoute: typeof AuthCallbackLazyRoute
   AuthResetPasswordLazyRoute: typeof AuthResetPasswordLazyRoute
 }
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tenant/$tenantId': {
+      id: '/tenant/$tenantId'
+      path: '/tenant/$tenantId'
+      fullPath: '/tenant/$tenantId'
+      preLoaderRoute: typeof TenantTenantIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -169,6 +189,7 @@ const rootRouteChildren: RootRouteChildren = {
   ActionsLazyRoute: ActionsLazyRoute,
   BusinessSettingsLazyRoute: BusinessSettingsLazyRoute,
   UsersLazyRoute: UsersLazyRoute,
+  TenantTenantIdRoute: TenantTenantIdRoute,
   AuthCallbackLazyRoute: AuthCallbackLazyRoute,
   AuthResetPasswordLazyRoute: AuthResetPasswordLazyRoute,
 }
