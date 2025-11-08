@@ -321,13 +321,47 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get business settings by ID */
+        /** Get business settings by ID (Public) */
         get: operations["BusinessSettingsController_findOne"];
         /** Update business settings */
         put: operations["BusinessSettingsController_update"];
         post?: never;
         /** Delete business settings */
         delete: operations["BusinessSettingsController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/business-settings/slug/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get business settings by slug (Public) */
+        get: operations["BusinessSettingsController_findBySlug"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/business-settings/generate-slugs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate slugs for existing records (Admin only) */
+        post: operations["BusinessSettingsController_generateSlugs"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -340,7 +374,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get all interventions (Admin: all, Tenant: own) */
+        /** Get all interventions (Public with businessSettingsId, or authenticated for own) */
         get: operations["InterventionController_findAll"];
         put?: never;
         /** Create intervention/service (Tenant only) */
@@ -377,7 +411,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get all masters (Admin: all, Tenant: own) */
+        /** Get all masters (Public with businessSettingsId, or authenticated for own) */
         get: operations["MasterController_findAll"];
         put?: never;
         /** Create master (Tenant only) */
@@ -661,6 +695,11 @@ export interface components {
              */
             title: string;
             /**
+             * @description URL-friendly slug (auto-generated from title if not provided)
+             * @example beauty-salon-spa
+             */
+            slug?: string;
+            /**
              * @description Business description
              * @example Professional beauty services in the heart of the city
              */
@@ -713,6 +752,11 @@ export interface components {
              */
             title: string;
             /**
+             * @description URL-friendly slug
+             * @example beauty-salon-spa
+             */
+            slug: string;
+            /**
              * @description Business description
              * @example Professional beauty services in the heart of the city
              */
@@ -738,6 +782,11 @@ export interface components {
              * @example Beauty Salon & Spa
              */
             title?: string;
+            /**
+             * @description URL-friendly slug
+             * @example beauty-salon-spa
+             */
+            slug?: string;
             /**
              * @description Business description
              * @example Professional beauty services in the heart of the city
@@ -1742,20 +1791,6 @@ export interface operations {
                     "application/json": components["schemas"]["BusinessSettingsDto"];
                 };
             };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             /** @description Business settings not found */
             404: {
                 headers: {
@@ -1855,9 +1890,74 @@ export interface operations {
             };
         };
     };
-    InterventionController_findAll: {
+    BusinessSettingsController_findBySlug: {
         parameters: {
             query?: never;
+            header?: never;
+            path: {
+                /** @description Business settings slug */
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns business settings details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessSettingsDto"];
+                };
+            };
+            /** @description Business settings not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BusinessSettingsController_generateSlugs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Slugs generated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    InterventionController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Filter by business settings ID (public access) */
+                businessSettingsId?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1872,13 +1972,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["InterventionDto"][];
                 };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };
@@ -2056,7 +2149,10 @@ export interface operations {
     };
     MasterController_findAll: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Filter by business settings ID (public access) */
+                businessSettingsId?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -2071,13 +2167,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["MasterDto"][];
                 };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };

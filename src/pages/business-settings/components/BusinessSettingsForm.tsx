@@ -30,6 +30,7 @@ interface BusinessSettingsFormProps {
   businessSettings?: {
     id: string;
     title: string;
+    slug?: string;
     description?: string;
     address?: string;
     workingHours: WorkingHours[];
@@ -72,6 +73,7 @@ export const BusinessSettingsForm = ({
   const form = useForm({
     defaultValues: {
       title: businessSettings?.title || "",
+      slug: businessSettings?.slug || "",
       description: businessSettings?.description || "",
       address: businessSettings?.address || "",
       googleCalendarId: businessSettings?.googleCalendarId || "",
@@ -90,8 +92,9 @@ export const BusinessSettingsForm = ({
         website: value.website || undefined,
       };
 
-      const data: CreateBusinessSettingsBody = {
+      const data: CreateBusinessSettingsBody & { slug?: string } = {
         title: value.title,
+        slug: value.slug || undefined,
         description: value.description || undefined,
         address: value.address || undefined,
         workingHours: workingHours,
@@ -130,6 +133,32 @@ export const BusinessSettingsForm = ({
                 placeholder="Enter business title"
                 required
               />
+            </div>
+          )}
+        </form.Field>
+
+        <form.Field name="slug">
+          {(field) => (
+            <div className="space-y-2">
+              <Label htmlFor="slug">
+                URL Slug{" "}
+                <span className="text-sm text-gray-500 font-normal">
+                  (auto-generated from title if empty)
+                </span>
+              </Label>
+              <Input
+                id="slug"
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+                placeholder="my-business-name"
+                pattern="[a-z0-9-]+"
+                title="Only lowercase letters, numbers, and hyphens allowed"
+              />
+              {field.state.value && (
+                <p className="text-xs text-gray-500">
+                  Public URL: {window.location.origin}/tenant/{field.state.value}
+                </p>
+              )}
             </div>
           )}
         </form.Field>

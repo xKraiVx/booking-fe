@@ -166,11 +166,11 @@ export const deleteMaster = async (id: string): Promise<void> => {
 };
 
 // ============ Public API (No Auth Required) ============
-export const getPublicBusinessSettings = async (
-  tenantId: string,
+export const getPublicBusinessSettingsBySlug = async (
+  slug: string,
 ): Promise<GetBusinessSettingsByIdResponse> => {
   const response = await api.get<GetBusinessSettingsByIdResponse>(
-    `/business-settings/${tenantId}`,
+    `/business-settings/slug/${slug}`,
   );
   return response.data;
 };

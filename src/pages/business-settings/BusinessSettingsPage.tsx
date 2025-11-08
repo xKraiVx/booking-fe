@@ -56,8 +56,8 @@ export const BusinessSettingsPage = () => {
   };
 
   const handleCopyLink = async () => {
-    if (businessSettings?.[0]?.id) {
-      const publicUrl = `${window.location.origin}/tenant/${businessSettings[0].id}`;
+    if (businessSettings?.[0]?.slug) {
+      const publicUrl = `${window.location.origin}/tenant/${businessSettings[0].slug}`;
       try {
         await navigator.clipboard.writeText(publicUrl);
         setIsCopied(true);
@@ -69,8 +69,8 @@ export const BusinessSettingsPage = () => {
   };
 
   const handleOpenPublicPage = () => {
-    if (businessSettings?.[0]?.id) {
-      const publicUrl = `${window.location.origin}/tenant/${businessSettings[0].id}`;
+    if (businessSettings?.[0]?.slug) {
+      const publicUrl = `${window.location.origin}/tenant/${businessSettings[0].slug}`;
       window.open(publicUrl, "_blank");
     }
   };
@@ -96,7 +96,7 @@ export const BusinessSettingsPage = () => {
           <CardContent className="space-y-3">
             <div className="flex items-center gap-2 p-3 bg-white rounded-md border border-blue-200">
               <code className="flex-1 text-sm text-gray-700 break-all">
-                {`${window.location.origin}/tenant/${businessSettings[0].id}`}
+                {`${window.location.origin}/tenant/${businessSettings[0].slug}`}
               </code>
             </div>
             <div className="flex gap-2">
