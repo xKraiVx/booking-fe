@@ -1,4 +1,4 @@
-import { getAllUsers } from "@/repos/user.repo";
+import { getAllUsers } from "@/repos/user/user.repo";
 import { useQuery } from "@tanstack/react-query";
 import { getAllUsersQueryKey } from "./queryKeys";
 

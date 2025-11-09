@@ -7,7 +7,7 @@ import {
   updateMaster,
   type CreateMasterBody,
   type UpdateMasterBody,
-} from "@/repos/business.repo";
+} from "@/repos/business/business.repo";
 
 export const masterKeys = {
   all: ["masters"] as const,

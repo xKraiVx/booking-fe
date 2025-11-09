@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import Cookies from "js-cookie";
 import type { JSX } from "react";
 import { useAuthStore } from "@/store/authStore";
-import { getProfile } from "@/repos/auth.repo";
+import { getProfile } from "@/repos/auth/auth.repo";
 import Loader from "@/common/Loader";
 
 export default function AuthCallbackPage(): JSX.Element {

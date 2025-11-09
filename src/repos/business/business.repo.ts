@@ -1,53 +1,24 @@
 import api from "@/lib/api";
-import type { RequestBody, ResponseData } from "@/lib/api-types";
-
-// Business Settings Types
-type GetAllBusinessSettingsResponse = ResponseData<
-  "/business-settings",
-  "get",
-  200
->;
-type GetBusinessSettingsByIdResponse = ResponseData<
-  "/business-settings/{id}",
-  "get",
-  200
->;
-type CreateBusinessSettingsBody = RequestBody<"/business-settings", "post">;
-type CreateBusinessSettingsResponse = ResponseData<
-  "/business-settings",
-  "post",
-  201
->;
-type UpdateBusinessSettingsBody = RequestBody<"/business-settings/{id}", "put">;
-type UpdateBusinessSettingsResponse = ResponseData<
-  "/business-settings/{id}",
-  "put",
-  200
->;
-
-// Intervention Types
-type GetAllInterventionsResponse = ResponseData<"/interventions", "get", 200>;
-type GetInterventionByIdResponse = ResponseData<
-  "/interventions/{id}",
-  "get",
-  200
->;
-type CreateInterventionBody = RequestBody<"/interventions", "post">;
-type CreateInterventionResponse = ResponseData<"/interventions", "post", 201>;
-type UpdateInterventionBody = RequestBody<"/interventions/{id}", "put">;
-type UpdateInterventionResponse = ResponseData<
-  "/interventions/{id}",
-  "put",
-  200
->;
-
-// Master Types
-type GetAllMastersResponse = ResponseData<"/masters", "get", 200>;
-type GetMasterByIdResponse = ResponseData<"/masters/{id}", "get", 200>;
-type CreateMasterBody = RequestBody<"/masters", "post">;
-type CreateMasterResponse = ResponseData<"/masters", "post", 201>;
-type UpdateMasterBody = RequestBody<"/masters/{id}", "put">;
-type UpdateMasterResponse = ResponseData<"/masters/{id}", "put", 200>;
+import type {
+  CreateBusinessSettingsBody,
+  CreateBusinessSettingsResponse,
+  CreateInterventionBody,
+  CreateInterventionResponse,
+  CreateMasterBody,
+  CreateMasterResponse,
+  GetAllBusinessSettingsResponse,
+  GetAllInterventionsResponse,
+  GetAllMastersResponse,
+  GetBusinessSettingsByIdResponse,
+  GetInterventionByIdResponse,
+  GetMasterByIdResponse,
+  UpdateBusinessSettingsBody,
+  UpdateBusinessSettingsResponse,
+  UpdateInterventionBody,
+  UpdateInterventionResponse,
+  UpdateMasterBody,
+  UpdateMasterResponse,
+} from "@/repos/business/business.types";
 
 // ============ Business Settings ============
 export const getAllBusinessSettings =

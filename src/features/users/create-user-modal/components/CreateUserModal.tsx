@@ -16,8 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/common/components/ui/select/select";
-import type { UserRole } from "@/repos/user.repo";
 import { useCreateUserForm } from "../hooks";
+import type { UserRole } from "@/repos/user/user.types";
 
 interface CreateUserModalProps {
   isOpen: boolean;

@@ -3,7 +3,7 @@ import {
   getPublicBusinessSettingsBySlug,
   getPublicInterventions,
   getPublicMasters,
-} from "@/repos/business.repo";
+} from "@/repos/business/business.repo";
 import TenantPublicPage from "@/pages/tenant/TenantPublicPage";
 
 export const Route = createFileRoute("/tenant/$tenantId")({

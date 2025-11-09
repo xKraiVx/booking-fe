@@ -1,4 +1,4 @@
-import { deleteUser } from "@/repos/user.repo";
+import { deleteUser } from "@/repos/user/user.repo";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAllUsersQueryKey } from "./queryKeys";
 

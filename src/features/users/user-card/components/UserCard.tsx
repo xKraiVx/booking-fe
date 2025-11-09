@@ -17,7 +17,7 @@ import {
 import { Avatar } from "@/common/components/ui/avatar/avatar";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import type { User } from "@/lib/api";
-import type { UserRole } from "@/repos/user.repo";
+import type { UserRole } from "@/repos/user/user.repo";
 
 interface UserCardProps {
   user: User;

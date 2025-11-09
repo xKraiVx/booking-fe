@@ -7,7 +7,7 @@ import { Button } from "@/common/components/ui/button/button";
 import { UserPlus } from "lucide-react";
 import Loader from "@/common/Loader";
 import type { User } from "@/lib/api";
-import type { UserRole } from "@/repos/user.repo";
+import type { UserRole } from "@/repos/user/user.repo";
 
 export default function UsersPage() {
   const { data: users, isLoading } = useGetAllUsers();

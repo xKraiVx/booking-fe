@@ -7,7 +7,7 @@ import {
   updateBusinessSettings,
   type CreateBusinessSettingsBody,
   type UpdateBusinessSettingsBody,
-} from "@/repos/business.repo";
+} from "@/repos/business/business.repo";
 
 export const businessSettingsKeys = {
   all: ["business-settings"] as const,

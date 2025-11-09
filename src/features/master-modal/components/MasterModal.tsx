@@ -18,7 +18,7 @@ import {
   useDeleteMaster,
   useGetMasterById,
 } from "@/use-cases/masters/useMasters";
-import type { CreateMasterBody } from "@/repos/business.repo";
+import type { CreateMasterBody } from "@/repos/business/business.repo";
 
 interface MasterModalProps {
   open: boolean;

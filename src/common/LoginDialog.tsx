@@ -11,7 +11,7 @@ import {
 import { Input } from "./components/ui/input/input";
 import { Label } from "./components/ui/label/label";
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../lib/config";
-import { login, register } from "../repos/auth.repo";
+import { login, register } from "../repos/auth/auth.repo";
 import { useAuthStore } from "../store/authStore";
 import { ForgotPasswordDialog } from "./ForgotPasswordDialog";
 import Cookies from "js-cookie";

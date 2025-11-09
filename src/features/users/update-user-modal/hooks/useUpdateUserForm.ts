@@ -1,10 +1,9 @@
 import { useForm } from "@tanstack/react-form";
 import { useUpdateUser } from "@/use-cases/user/useUpdateUser";
-import type { User } from "@/lib/api";
-import type { UpdateUserDto, UserRole } from "@/repos/user.repo";
+import type { UpdateUserBody, UserData, UserRole } from "@/repos/user/user.types";
 
 interface UseUpdateUserFormProps {
-  user: User;
+  user: UserData;
   onSuccess?: () => void;
 }
 
@@ -19,7 +18,7 @@ export const useUpdateUserForm = ({ user, onSuccess }: UseUpdateUserFormProps) =
       role: user.role as UserRole,
     },
     onSubmit: async ({ value }) => {
-      const userData: UpdateUserDto = {
+      const userData: UpdateUserBody = {
         email: value.email,
         firstName: value.firstName,
         lastName: value.lastName,

@@ -26,7 +26,7 @@ import {
   useDeleteIntervention,
   useGetInterventionById,
 } from "@/use-cases/interventions/useInterventions";
-import type { CreateInterventionBody } from "@/repos/business.repo";
+import type { CreateInterventionBody } from "@/repos/business/business.repo";
 
 interface InterventionModalProps {
   open: boolean;

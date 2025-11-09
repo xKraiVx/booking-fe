@@ -1,17 +1,7 @@
 import api from "@/lib/api";
-import type { RequestBody, ResponseData } from "@/lib/api-types";
+import type { CreateUserBody, CreateUserResponse, GetAllUsersResponse, GetUserByIdResponse, UpdateUserBody, UpdateUserResponse } from "@/repos/user/user.types";
 
-type GetAllUsersResponse = ResponseData<"/auth/users", "get", 200>;
 
-type GetUserByIdResponse = ResponseData<"/auth/users/{id}", "get", 200>;
-
-type CreateUserBody = RequestBody<"/auth/users", "post">;
-
-type CreateUserResponse = ResponseData<"/auth/users", "post", 201>;
-
-type UpdateUserBody = RequestBody<"/auth/users/{id}", "put">;
-
-type UpdateUserResponse = ResponseData<"/auth/users/{id}", "put", 200>;
 
 // Get all users (Admin only)
 export const getAllUsers = async (): Promise<GetAllUsersResponse> => {

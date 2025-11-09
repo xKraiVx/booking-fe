@@ -1,15 +1,15 @@
 import type { PropsWithChildren } from "react";
-import type { User } from "@/lib/api";
 import RootLayoutNavigation from "@/layouts/root-layout/components/RootLayoutNavigation";
+import type { UserData } from "@/repos/user/user.types";
 
 interface RootLayoutProps extends PropsWithChildren {
-  profile: User | null;
+  profile: UserData | null;
 }
 
 export default function RootLayout({ children, profile }: RootLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b">
+      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
         <div className="container mx-auto px-4 py-4">
           <RootLayoutNavigation profile={profile} />
         </div>

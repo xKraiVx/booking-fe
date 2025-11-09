@@ -10,7 +10,7 @@ import {
 } from "./components/ui/dialog/dialog";
 import { Input } from "./components/ui/input/input";
 import { Label } from "./components/ui/label/label";
-import { forgotPassword } from "../repos/auth.repo";
+import { forgotPassword } from "../repos/auth/auth.repo";
 
 export function ForgotPasswordDialog() {
   const [email, setEmail] = useState("");

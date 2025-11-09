@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./components/ui/card/card";
-import { resetPassword } from "../repos/auth.repo";
+import { resetPassword } from "../repos/auth/auth.repo";
 
 export function ResetPasswordForm() {
   const navigate = useNavigate();

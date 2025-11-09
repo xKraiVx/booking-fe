@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import Cookies from "js-cookie";
-import type { User } from "@/repos/user.repo";
+import type { User } from "@/repos/user/user.repo";
 
 interface AuthState {
   isAuthenticated: boolean;

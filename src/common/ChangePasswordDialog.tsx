@@ -10,7 +10,7 @@ import {
 } from "./components/ui/dialog/dialog";
 import { Input } from "./components/ui/input/input";
 import { Label } from "./components/ui/label/label";
-import { changePassword } from "../repos/auth.repo";
+import { changePassword } from "../repos/auth/auth.repo";
 
 interface ChangePasswordDialogProps {
   trigger?: React.ReactNode;

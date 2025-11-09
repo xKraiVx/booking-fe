@@ -7,7 +7,7 @@ import {
   updateIntervention,
   type CreateInterventionBody,
   type UpdateInterventionBody,
-} from "@/repos/business.repo";
+} from "@/repos/business/business.repo";
 
 export const interventionKeys = {
   all: ["interventions"] as const,

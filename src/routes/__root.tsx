@@ -1,7 +1,7 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { getIsAuthenticated } from "@/common/utils/getIsAuthenticated";
-import { getProfile } from "@/repos/auth.repo";
+import { getProfile } from "@/repos/auth/auth.repo";
 import RootLayout from "@/layouts/root-layout/components/RootLayout";
 
 export const Route = createRootRoute({

@@ -3,7 +3,7 @@ import { Separator } from "@/common/components/ui/separator/separator";
 import { UserMenu } from "@/features/user-menu/components/UserMenu";
 import { LoginDialog } from "@/common/LoginDialog";
 import { Link } from "@tanstack/react-router";
-import type { GetProfileResponse } from "@/repos/auth.repo";
+import type { GetProfileResponse } from "@/repos/auth/auth.types";
 
 interface RootLayoutNavigationProps {
   profile: GetProfileResponse | null;

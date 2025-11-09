@@ -9,7 +9,7 @@ import {
   useCreateBusinessSettings,
   useUpdateBusinessSettings,
 } from "@/use-cases/business-settings/useBusinessSettings";
-import type { CreateBusinessSettingsBody } from "@/repos/business.repo";
+import type { CreateBusinessSettingsBody } from "@/repos/business/business.repo";
 
 interface WorkingHours {
   day: string;

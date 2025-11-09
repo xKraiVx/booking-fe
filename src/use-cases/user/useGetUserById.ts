@@ -1,4 +1,4 @@
-import { getUserById } from "@/repos/user.repo";
+import { getUserById } from "@/repos/user/user.repo";
 import { useQuery } from "@tanstack/react-query";
 import { getUserByIdQueryKey } from "./queryKeys";
 

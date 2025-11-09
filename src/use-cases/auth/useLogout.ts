@@ -1,4 +1,4 @@
-import { logout } from "@/repos/auth.repo";
+import { logout } from "@/repos/auth/auth.repo";
 import { useAuthStore } from "@/store/authStore";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
