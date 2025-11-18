@@ -314,20 +314,18 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/business-settings/{id}": {
+    "/business-settings/my-settings": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get business settings by ID (Public) */
+        /** Get business settings for the authenticated user */
         get: operations["BusinessSettingsController_findOne"];
-        /** Update business settings */
-        put: operations["BusinessSettingsController_update"];
+        put?: never;
         post?: never;
-        /** Delete business settings */
-        delete: operations["BusinessSettingsController_remove"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -362,6 +360,24 @@ export interface paths {
         /** Generate slugs for existing records (Admin only) */
         post: operations["BusinessSettingsController_generateSlugs"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/business-settings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update business settings */
+        put: operations["BusinessSettingsController_update"];
+        post?: never;
+        /** Delete business settings */
+        delete: operations["BusinessSettingsController_remove"];
         options?: never;
         head?: never;
         patch?: never;
@@ -775,6 +791,99 @@ export interface components {
             googleCalendarId?: string;
             /** @description Social media links */
             socialLinks?: components["schemas"]["SocialLinksDto"];
+        };
+        PublicInterventionDto: {
+            /**
+             * @description Intervention/service name
+             * @example Classic Manicure
+             */
+            name: string;
+            /**
+             * @description Price of the service
+             * @example 50
+             */
+            price: number;
+            /**
+             * @description Currency
+             * @example PLN
+             * @enum {string}
+             */
+            currency: "PLN" | "USD" | "EUR" | "GBP";
+            /**
+             * @description Service images URLs
+             * @example [
+             *       "https://example.com/image1.jpg",
+             *       "https://example.com/image2.jpg"
+             *     ]
+             */
+            images?: string[];
+            /**
+             * @description Duration of the service in minutes
+             * @example 60
+             */
+            duration: number;
+            /**
+             * @description Service description
+             * @example Professional manicure with nail polish of your choice
+             */
+            description?: string;
+        };
+        PublicMasterDto: {
+            /**
+             * @description Master name
+             * @example Anna Kowalska
+             */
+            name: string;
+            /**
+             * @description Master date of birth
+             * @example 1990-05-15
+             */
+            dateOfBirth?: string;
+            /**
+             * @description Master photo URL
+             * @example https://example.com/masters/anna.jpg
+             */
+            photo?: string;
+            /**
+             * @description Master description/bio
+             * @example Experienced nail technician with 10+ years of experience
+             */
+            description?: string;
+        };
+        PublicBusinessSettingsDto: {
+            /**
+             * @description Business title
+             * @example Beauty Salon & Spa
+             */
+            title: string;
+            /**
+             * @description URL-friendly slug
+             * @example beauty-salon-spa
+             */
+            slug: string;
+            /**
+             * @description Business description
+             * @example Professional beauty services in the heart of the city
+             */
+            description?: string;
+            /**
+             * @description Business address
+             * @example 123 Main Street, Warsaw, Poland
+             */
+            address?: string;
+            /** @description Working hours for each day of the week */
+            workingHours: components["schemas"]["WorkingHoursDto"][];
+            /**
+             * @description Google Calendar integration ID
+             * @example calendar@example.com
+             */
+            googleCalendarId?: string;
+            /** @description Social media links */
+            socialLinks?: components["schemas"]["SocialLinksDto"];
+            /** @description List of interventions/services */
+            interventions?: components["schemas"]["PublicInterventionDto"][];
+            /** @description List of masters */
+            masters?: components["schemas"]["PublicMasterDto"][];
         };
         UpdateBusinessSettingsDto: {
             /**
@@ -1774,9 +1883,36 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns business settings details for the current user */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BusinessSettingsDto"];
+                };
+            };
+            /** @description Business settings not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BusinessSettingsController_findBySlug: {
+        parameters: {
+            query?: never;
+            header?: never;
             path: {
-                /** @description Business settings ID */
-                id: string;
+                /** @description Business settings slug */
+                slug: string;
             };
             cookie?: never;
         };
@@ -1788,11 +1924,43 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BusinessSettingsDto"];
+                    "application/json": components["schemas"]["PublicBusinessSettingsDto"];
                 };
             };
             /** @description Business settings not found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BusinessSettingsController_generateSlugs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Slugs generated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -1883,68 +2051,6 @@ export interface operations {
             };
             /** @description Business settings not found */
             404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    BusinessSettingsController_findBySlug: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Business settings slug */
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Returns business settings details */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BusinessSettingsDto"];
-                };
-            };
-            /** @description Business settings not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    BusinessSettingsController_generateSlugs: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Slugs generated successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Forbidden */
-            403: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2167,6 +2273,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["MasterDto"][];
                 };
+            };
+            /** @description Unauthorized - when no businessSettingsId and no auth */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

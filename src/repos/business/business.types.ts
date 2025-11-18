@@ -5,8 +5,13 @@ export type GetAllBusinessSettingsResponse = ResponseData<
   "get",
   200
 >;
-export type GetBusinessSettingsByIdResponse = ResponseData<
-  "/business-settings/{id}",
+export type GetMyBusinessSettingsResponse = ResponseData<
+  "/business-settings/my-settings",
+  "get",
+  200
+>;
+export type GetPublicBusinessSettingsResponse = ResponseData<
+  "/business-settings/slug/{slug}",
   "get",
   200
 >;

@@ -3,7 +3,7 @@ import {
   createBusinessSettings,
   deleteBusinessSettings,
   getAllBusinessSettings,
-  getBusinessSettingsById,
+  getMyBusinessSettings,
   updateBusinessSettings,
   type CreateBusinessSettingsBody,
   type UpdateBusinessSettingsBody,
@@ -11,6 +11,7 @@ import {
 
 export const businessSettingsKeys = {
   all: ["business-settings"] as const,
+  my: () => [...businessSettingsKeys.all, "my"] as const,
   lists: () => [...businessSettingsKeys.all, "list"] as const,
   list: (filters: string) =>
     [...businessSettingsKeys.lists(), { filters }] as const,
@@ -25,11 +26,10 @@ export const useGetAllBusinessSettings = () => {
   });
 };
 
-export const useGetBusinessSettingsById = (id: string) => {
+export const useGetMyBusinessSettings = () => {
   return useQuery({
-    queryKey: businessSettingsKeys.detail(id),
-    queryFn: () => getBusinessSettingsById(id),
-    enabled: !!id,
+    queryKey: businessSettingsKeys.my(),
+    queryFn: () => getMyBusinessSettings(),
   });
 };
 

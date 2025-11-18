@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetAllBusinessSettings } from "@/use-cases/business-settings/useBusinessSettings";
+import { useGetMyBusinessSettings } from "@/use-cases/business-settings/useBusinessSettings";
 import { useGetAllInterventions } from "@/use-cases/interventions/useInterventions";
 import { useGetAllMasters } from "@/use-cases/masters/useMasters";
 import { Button } from "@/common/components/ui/button/button";
@@ -26,7 +26,7 @@ export const BusinessSettingsPage = () => {
   const [isCopied, setIsCopied] = useState(false);
 
   const { data: businessSettings, isLoading: isLoadingSettings } =
-    useGetAllBusinessSettings();
+    useGetMyBusinessSettings();
   const { data: interventions, isLoading: isLoadingInterventions } =
     useGetAllInterventions();
   const { data: masters, isLoading: isLoadingMasters } = useGetAllMasters();
@@ -56,8 +56,8 @@ export const BusinessSettingsPage = () => {
   };
 
   const handleCopyLink = async () => {
-    if (businessSettings?.[0]?.slug) {
-      const publicUrl = `${window.location.origin}/tenant/${businessSettings[0].slug}`;
+    if (businessSettings?.slug) {
+      const publicUrl = `${window.location.origin}/tenant/${businessSettings.slug}`;
       try {
         await navigator.clipboard.writeText(publicUrl);
         setIsCopied(true);
@@ -69,8 +69,8 @@ export const BusinessSettingsPage = () => {
   };
 
   const handleOpenPublicPage = () => {
-    if (businessSettings?.[0]?.slug) {
-      const publicUrl = `${window.location.origin}/tenant/${businessSettings[0].slug}`;
+    if (businessSettings?.slug) {
+      const publicUrl = `${window.location.origin}/tenant/${businessSettings.slug}`;
       window.open(publicUrl, "_blank");
     }
   };
@@ -82,7 +82,7 @@ export const BusinessSettingsPage = () => {
       </div>
 
       {/* Public Page Link Section */}
-      {businessSettings?.[0]?.id && (
+      {businessSettings?.id && (
         <Card className="border-blue-200 bg-blue-50/50">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-blue-900">
@@ -96,7 +96,7 @@ export const BusinessSettingsPage = () => {
           <CardContent className="space-y-3">
             <div className="flex items-center gap-2 p-3 bg-white rounded-md border border-blue-200">
               <code className="flex-1 text-sm text-gray-700 break-all">
-                {`${window.location.origin}/tenant/${businessSettings[0].slug}`}
+                {`${window.location.origin}/tenant/${businessSettings.slug}`}
               </code>
             </div>
             <div className="flex gap-2">
@@ -139,7 +139,7 @@ export const BusinessSettingsPage = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <BusinessSettingsForm businessSettings={businessSettings?.[0]} />
+          <BusinessSettingsForm businessSettings={businessSettings} />
         </CardContent>
       </Card>
 

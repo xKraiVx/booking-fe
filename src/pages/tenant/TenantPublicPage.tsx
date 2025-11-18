@@ -7,7 +7,10 @@ import ContactSection from "@/pages/tenant/components/ContactSection";
 
 
 export default function TenantPublicPage() {
-  const { businessSettings, interventions, masters } = Route.useLoaderData();
+  const { businessSettings } = Route.useLoaderData();
+
+  const interventions = businessSettings.interventions || [];
+  const masters = businessSettings.masters || [];
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">

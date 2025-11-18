@@ -2,13 +2,12 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
 
 interface Service {
-  id: string;
   name: string;
-  description?: string;
   price: number;
-  currency: string;
+  currency: "PLN" | "USD" | "EUR" | "GBP";
+  images?: string[] | undefined;
   duration: number;
-  images?: string[];
+  description?: string | undefined;
 }
 
 interface ServicesSliderProps {
@@ -72,10 +71,7 @@ export default function ServicesSlider({ services }: ServicesSliderProps) {
           }}
         >
           {services.map((service) => (
-            <div
-              key={service.id}
-              className="shrink-0 w-full md:w-1/2 lg:w-1/3"
-            >
+            <div key={service.name} className="shrink-0 w-full md:w-1/2 lg:w-1/3">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col hover:shadow-xl transition-shadow">
                 {/* Service Image */}
                 {service.images && service.images.length > 0 ? (

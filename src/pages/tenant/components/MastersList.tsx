@@ -1,11 +1,10 @@
 import { User } from "lucide-react";
 
 interface Master {
-  id: string;
   name: string;
-  dateOfBirth?: string;
-  photo?: string;
-  description?: string;
+  dateOfBirth?: string | undefined;
+  photo?: string | undefined;
+  description?: string | undefined;
 }
 
 interface MastersListProps {
@@ -21,7 +20,7 @@ export default function MastersList({ masters }: MastersListProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {masters.map((master) => (
         <div
-          key={master.id}
+          key={master.name}
           className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
         >
           {/* Master Photo */}
