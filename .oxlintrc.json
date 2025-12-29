@@ -21,5 +21,5 @@
     "block-spacing": [2, "always"],
     "arrow-spacing": [2, { "before": true, "after": true }]
   },
-  "ignore": ["node_modules", "dist", "build", "src/routeTree.gen.ts"]
+  "ignorePatterns": ["node_modules", "dist", "build", "src/routeTree.gen.ts"]
 }

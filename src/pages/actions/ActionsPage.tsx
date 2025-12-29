@@ -14,10 +14,10 @@ export default function ActionsPage() {
       {error && <p>Error loading actions</p>}
       {actions?.data && (
         <ul>
-          {actions.data.map(({ id, action, user, statusCode, createdAt }) => (
-            <li key={id}>
-              {action} - {user.email} - {statusCode} - (
-              {new Date(createdAt).toLocaleString("en-GB")})
+          {actions.data.map((item) => (
+            <li key={item.id}>
+              {item.action} - {item.user?.email || 'N/A'} - {item.statusCode} - (
+              {new Date(item.createdAt).toLocaleString("en-GB")})
             </li>
           ))}
         </ul>
