@@ -296,6 +296,76 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/booking": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all bookings (Admin: all, Tenant: own business, Client: own bookings) */
+        get: operations["BookingController_findAll"];
+        put?: never;
+        /** Create a new booking (All authenticated users) */
+        post: operations["BookingController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/booking/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get booking by ID (Admin: all, Tenant: own business, Client: own bookings) */
+        get: operations["BookingController_findOne"];
+        /** Update a booking (Admin: all bookings, Tenant: own business bookings) */
+        put: operations["BookingController_update"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/booking/availability/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Check availability for a service (Public API) */
+        get: operations["BookingController_getAvailability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/booking/reservation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a temporary reservation (Public API - 5 minutes validity) */
+        post: operations["BookingController_createReservation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/business-settings": {
         parameters: {
             query?: never;
@@ -655,6 +725,259 @@ export interface components {
              */
             isActive?: boolean;
         };
+        CreateBookingDto: {
+            /**
+             * @description Business settings ID
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            businessSettingsId: string;
+            /**
+             * @description Service/Intervention ID
+             * @example 123e4567-e89b-12d3-a456-426614174001
+             */
+            interventionId: string;
+            /**
+             * @description Master ID
+             * @example 123e4567-e89b-12d3-a456-426614174002
+             */
+            masterId: string;
+            /**
+             * @description Start time of the booking (ISO 8601 format)
+             * @example 2025-11-30T10:00:00Z
+             */
+            startTime: string;
+            /**
+             * @description End time of the booking (ISO 8601 format)
+             * @example 2025-11-30T11:00:00Z
+             */
+            endTime: string;
+            /**
+             * @description Optional notes for the booking
+             * @example Please call before arriving
+             */
+            notes?: string;
+            /**
+             * @description Optional reservation ID to convert a temporary reservation into a booking
+             * @example 123e4567-e89b-12d3-a456-426614174003
+             */
+            reservationId?: string;
+        };
+        BookingResponseDto: {
+            /**
+             * @description Booking ID
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
+             * @description Business settings ID
+             * @example 123e4567-e89b-12d3-a456-426614174001
+             */
+            businessSettingsId: string;
+            /**
+             * @description Client user ID
+             * @example 123e4567-e89b-12d3-a456-426614174002
+             */
+            clientId: string;
+            /**
+             * @description Service/Intervention ID
+             * @example 123e4567-e89b-12d3-a456-426614174003
+             */
+            interventionId: string;
+            /**
+             * @description Master ID
+             * @example 123e4567-e89b-12d3-a456-426614174004
+             */
+            masterId: string;
+            /**
+             * Format: date-time
+             * @description Start time of the booking
+             * @example 2025-11-30T10:00:00Z
+             */
+            startTime: string;
+            /**
+             * Format: date-time
+             * @description End time of the booking
+             * @example 2025-11-30T11:00:00Z
+             */
+            endTime: string;
+            /**
+             * @description Booking status
+             * @example confirmed
+             * @enum {string}
+             */
+            status: "pending" | "confirmed" | "cancelled" | "completed";
+            /**
+             * @description Optional notes
+             * @example Please call before arriving
+             */
+            notes?: string;
+            /**
+             * @description Reservation ID if created from a reservation
+             * @example 123e4567-e89b-12d3-a456-426614174005
+             */
+            reservationId?: string;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2025-11-29T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             * @example 2025-11-29T12:00:00Z
+             */
+            updatedAt: string;
+        };
+        UpdateBookingDto: {
+            /**
+             * @description Start time of the booking (ISO 8601 format)
+             * @example 2025-11-30T10:00:00Z
+             */
+            startTime?: string;
+            /**
+             * @description End time of the booking (ISO 8601 format)
+             * @example 2025-11-30T11:00:00Z
+             */
+            endTime?: string;
+            /**
+             * @description Booking status
+             * @example confirmed
+             * @enum {string}
+             */
+            status?: "pending" | "confirmed" | "cancelled" | "completed";
+            /**
+             * @description Optional notes for the booking
+             * @example Please call before arriving
+             */
+            notes?: string;
+            /**
+             * @description Master ID (if changing master)
+             * @example 123e4567-e89b-12d3-a456-426614174002
+             */
+            masterId?: string;
+        };
+        TimeSlotDto: {
+            /**
+             * Format: date-time
+             * @description Start time of the available slot
+             * @example 2025-11-30T10:00:00Z
+             */
+            startTime: string;
+            /**
+             * Format: date-time
+             * @description End time of the available slot
+             * @example 2025-11-30T11:00:00Z
+             */
+            endTime: string;
+            /**
+             * @description Master ID for this slot
+             * @example 123e4567-e89b-12d3-a456-426614174002
+             */
+            masterId: string;
+            /**
+             * @description Master name
+             * @example John Doe
+             */
+            masterName: string;
+        };
+        AvailabilityResponseDto: {
+            /**
+             * @description Service/Intervention ID
+             * @example 123e4567-e89b-12d3-a456-426614174001
+             */
+            serviceId: string;
+            /**
+             * @description Service name
+             * @example Haircut
+             */
+            serviceName: string;
+            /**
+             * @description Service duration in minutes
+             * @example 60
+             */
+            serviceDuration: number;
+            /** @description Available time slots */
+            availableSlots: components["schemas"]["TimeSlotDto"][];
+        };
+        CreateReservationDto: {
+            /**
+             * @description Business settings ID
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            businessSettingsId: string;
+            /**
+             * @description Service/Intervention ID
+             * @example 123e4567-e89b-12d3-a456-426614174001
+             */
+            interventionId: string;
+            /**
+             * @description Master ID
+             * @example 123e4567-e89b-12d3-a456-426614174002
+             */
+            masterId: string;
+            /**
+             * @description Start time of the reservation (ISO 8601 format)
+             * @example 2025-11-30T10:00:00Z
+             */
+            startTime: string;
+            /**
+             * @description End time of the reservation (ISO 8601 format)
+             * @example 2025-11-30T11:00:00Z
+             */
+            endTime: string;
+        };
+        ReservationResponseDto: {
+            /**
+             * @description Reservation ID
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
+             * @description Business settings ID
+             * @example 123e4567-e89b-12d3-a456-426614174001
+             */
+            businessSettingsId: string;
+            /**
+             * @description Service/Intervention ID
+             * @example 123e4567-e89b-12d3-a456-426614174002
+             */
+            interventionId: string;
+            /**
+             * @description Master ID
+             * @example 123e4567-e89b-12d3-a456-426614174003
+             */
+            masterId: string;
+            /**
+             * Format: date-time
+             * @description Start time of the reservation
+             * @example 2025-11-30T10:00:00Z
+             */
+            startTime: string;
+            /**
+             * Format: date-time
+             * @description End time of the reservation
+             * @example 2025-11-30T11:00:00Z
+             */
+            endTime: string;
+            /**
+             * Format: date-time
+             * @description Expiration time (5 minutes from creation)
+             * @example 2025-11-30T10:05:00Z
+             */
+            expiresAt: string;
+            /**
+             * @description Whether the reservation has been used to create a booking
+             * @example false
+             */
+            isUsed: boolean;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2025-11-29T12:00:00Z
+             */
+            createdAt: string;
+        };
         WorkingHoursDto: {
             /**
              * @description Day of the week
@@ -794,6 +1117,11 @@ export interface components {
         };
         PublicInterventionDto: {
             /**
+             * @description Intervention ID (needed for bookings)
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
              * @description Intervention/service name
              * @example Classic Manicure
              */
@@ -851,6 +1179,11 @@ export interface components {
             description?: string;
         };
         PublicBusinessSettingsDto: {
+            /**
+             * @description Business settings ID (needed for bookings)
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
             /**
              * @description Business title
              * @example Beauty Salon & Spa
@@ -1806,6 +2139,258 @@ export interface operations {
                 content?: never;
             };
             /** @description Audit log not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BookingController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns list of bookings */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookingResponseDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BookingController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateBookingDto"];
+            };
+        };
+        responses: {
+            /** @description Booking created successfully */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookingResponseDto"];
+                };
+            };
+            /** @description Bad request - slot unavailable or validation error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Resource not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BookingController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Booking ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns booking details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookingResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Booking not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BookingController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Booking ID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateBookingDto"];
+            };
+        };
+        responses: {
+            /** @description Booking updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookingResponseDto"];
+                };
+            };
+            /** @description Bad request - slot unavailable or validation error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Booking not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BookingController_getAvailability: {
+        parameters: {
+            query: {
+                /** @description Service/Intervention ID */
+                serviceId: string;
+                /** @description Optional master ID to filter availability */
+                masterId?: string;
+                /** @description Optional start date for date range (ISO 8601 format) */
+                startDate?: string;
+                /** @description Optional end date for date range (ISO 8601 format) */
+                endDate?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns available time slots */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AvailabilityResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Service not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BookingController_createReservation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateReservationDto"];
+            };
+        };
+        responses: {
+            /** @description Reservation created successfully (expires in 5 minutes) */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReservationResponseDto"];
+                };
+            };
+            /** @description Bad request - slot unavailable or validation error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Resource not found */
             404: {
                 headers: {
                     [name: string]: unknown;

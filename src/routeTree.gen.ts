@@ -11,7 +11,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TenantTenantIdRouteImport } from './routes/tenant/$tenantId'
+import { Route as TenantTenantIdIndexRouteImport } from './routes/tenant/$tenantId/index'
+import { Route as TenantTenantIdBookRouteImport } from './routes/tenant/$tenantId/book'
 
 const UsersLazyRouteImport = createFileRoute('/users')()
 const BusinessSettingsLazyRouteImport = createFileRoute('/business-settings')()
@@ -56,9 +57,14 @@ const AuthCallbackLazyRoute = AuthCallbackLazyRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/auth/callback.lazy').then((d) => d.Route))
-const TenantTenantIdRoute = TenantTenantIdRouteImport.update({
-  id: '/tenant/$tenantId',
-  path: '/tenant/$tenantId',
+const TenantTenantIdIndexRoute = TenantTenantIdIndexRouteImport.update({
+  id: '/tenant/$tenantId/',
+  path: '/tenant/$tenantId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TenantTenantIdBookRoute = TenantTenantIdBookRouteImport.update({
+  id: '/tenant/$tenantId/book',
+  path: '/tenant/$tenantId/book',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -67,18 +73,20 @@ export interface FileRoutesByFullPath {
   '/actions': typeof ActionsLazyRoute
   '/business-settings': typeof BusinessSettingsLazyRoute
   '/users': typeof UsersLazyRoute
-  '/tenant/$tenantId': typeof TenantTenantIdRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
   '/auth/reset-password': typeof AuthResetPasswordLazyRoute
+  '/tenant/$tenantId/book': typeof TenantTenantIdBookRoute
+  '/tenant/$tenantId': typeof TenantTenantIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/actions': typeof ActionsLazyRoute
   '/business-settings': typeof BusinessSettingsLazyRoute
   '/users': typeof UsersLazyRoute
-  '/tenant/$tenantId': typeof TenantTenantIdRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
   '/auth/reset-password': typeof AuthResetPasswordLazyRoute
+  '/tenant/$tenantId/book': typeof TenantTenantIdBookRoute
+  '/tenant/$tenantId': typeof TenantTenantIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -86,9 +94,10 @@ export interface FileRoutesById {
   '/actions': typeof ActionsLazyRoute
   '/business-settings': typeof BusinessSettingsLazyRoute
   '/users': typeof UsersLazyRoute
-  '/tenant/$tenantId': typeof TenantTenantIdRoute
   '/auth/callback': typeof AuthCallbackLazyRoute
   '/auth/reset-password': typeof AuthResetPasswordLazyRoute
+  '/tenant/$tenantId/book': typeof TenantTenantIdBookRoute
+  '/tenant/$tenantId/': typeof TenantTenantIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,27 +106,30 @@ export interface FileRouteTypes {
     | '/actions'
     | '/business-settings'
     | '/users'
-    | '/tenant/$tenantId'
     | '/auth/callback'
     | '/auth/reset-password'
+    | '/tenant/$tenantId/book'
+    | '/tenant/$tenantId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/actions'
     | '/business-settings'
     | '/users'
-    | '/tenant/$tenantId'
     | '/auth/callback'
     | '/auth/reset-password'
+    | '/tenant/$tenantId/book'
+    | '/tenant/$tenantId'
   id:
     | '__root__'
     | '/'
     | '/actions'
     | '/business-settings'
     | '/users'
-    | '/tenant/$tenantId'
     | '/auth/callback'
     | '/auth/reset-password'
+    | '/tenant/$tenantId/book'
+    | '/tenant/$tenantId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -125,9 +137,10 @@ export interface RootRouteChildren {
   ActionsLazyRoute: typeof ActionsLazyRoute
   BusinessSettingsLazyRoute: typeof BusinessSettingsLazyRoute
   UsersLazyRoute: typeof UsersLazyRoute
-  TenantTenantIdRoute: typeof TenantTenantIdRoute
   AuthCallbackLazyRoute: typeof AuthCallbackLazyRoute
   AuthResetPasswordLazyRoute: typeof AuthResetPasswordLazyRoute
+  TenantTenantIdBookRoute: typeof TenantTenantIdBookRoute
+  TenantTenantIdIndexRoute: typeof TenantTenantIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -174,11 +187,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tenant/$tenantId': {
-      id: '/tenant/$tenantId'
+    '/tenant/$tenantId/': {
+      id: '/tenant/$tenantId/'
       path: '/tenant/$tenantId'
       fullPath: '/tenant/$tenantId'
-      preLoaderRoute: typeof TenantTenantIdRouteImport
+      preLoaderRoute: typeof TenantTenantIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tenant/$tenantId/book': {
+      id: '/tenant/$tenantId/book'
+      path: '/tenant/$tenantId/book'
+      fullPath: '/tenant/$tenantId/book'
+      preLoaderRoute: typeof TenantTenantIdBookRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -189,9 +209,10 @@ const rootRouteChildren: RootRouteChildren = {
   ActionsLazyRoute: ActionsLazyRoute,
   BusinessSettingsLazyRoute: BusinessSettingsLazyRoute,
   UsersLazyRoute: UsersLazyRoute,
-  TenantTenantIdRoute: TenantTenantIdRoute,
   AuthCallbackLazyRoute: AuthCallbackLazyRoute,
   AuthResetPasswordLazyRoute: AuthResetPasswordLazyRoute,
+  TenantTenantIdBookRoute: TenantTenantIdBookRoute,
+  TenantTenantIdIndexRoute: TenantTenantIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

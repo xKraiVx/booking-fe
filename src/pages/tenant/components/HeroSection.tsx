@@ -1,9 +1,19 @@
+import { Button } from "@/common/components/ui/button/button";
+import { useNavigate } from "@tanstack/react-router";
+
 interface HeroSectionProps {
   title: string;
   description?: string;
+  tenantSlug: string;
 }
 
-export default function HeroSection({ title, description }: HeroSectionProps) {
+export default function HeroSection({ title, description, tenantSlug }: HeroSectionProps) {
+  const navigate = useNavigate();
+
+  const handleBookNow = () => {
+    navigate({ to: "/tenant/$tenantId/book", params: { tenantId: tenantSlug } });
+  };
+
   return (
     <div className="relative bg-linear-to-b from-blue-600 to-blue-800 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-10"></div>
@@ -17,6 +27,15 @@ export default function HeroSection({ title, description }: HeroSectionProps) {
               {description}
             </p>
           )}
+          <div className="mt-10">
+            <Button
+              size="lg"
+              onClick={handleBookNow}
+              className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-6 text-lg"
+            >
+              Book Now
+            </Button>
+          </div>
         </div>
       </div>
       <div className="absolute bottom-0 left-0 right-0">

@@ -11,12 +11,12 @@ export default function TenantPublicPage() {
 
   const interventions = businessSettings.interventions || [];
   const masters = businessSettings.masters || [];
-
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       <HeroSection
         title={businessSettings.title}
         description={businessSettings.description}
+        tenantSlug={businessSettings.slug}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
