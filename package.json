@@ -13,8 +13,8 @@
     "preview": "vite preview",
     "prepare": "husky",
     "knip:check": "knip --no-exit-code || exit 0",
-    "generate:api": "openapi-typescript http://localhost:1337/api-json -o src/lib/api-schema.d.ts",
-    "generate:api:local": "openapi-typescript src/lib/api-schema.json -o src/lib/api-schema.d.ts"
+    "generate:api": "openapi-typescript http://localhost:1337/api-json -o src/ui/lib/api-schema.d.ts",
+    "generate:api:local": "openapi-typescript src/ui/lib/api-schema.json -o src/ui/lib/api-schema.d.ts"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
