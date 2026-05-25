@@ -1,41 +1,38 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "@tanstack/react-router";
+import { QueryClientProvider } from "@tanstack/react-query";
 import "./ui/index.css";
 import "./ui/i18n/config";
+import { AppConfig } from "./ui/app-config";
+import type { AppRouter } from "./ui/app-router";
+import type { AppQueryClient } from "./app/core/app-query-client";
 
-// Import the generated route tree
-import { routeTree } from "./ui/routeTree.gen";
+async function bootstrap() {
+  // Initialize Application Configuration
+  const appConfig = await AppConfig.getInstance();
+  const injector = appConfig.injector;
 
-// Create a new router instance
-const router = createRouter({ routeTree });
+  // Get instances from Injector
+  const router = injector.get<AppRouter>("router");
+  const queryClient = injector.get<AppQueryClient>("query-client");
 
-// Create a query client for React Query
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // 5 minutes
-      staleTime: 1000 * 60 * 5,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+  // Expose to window for debugging
+  (window as { appConfig?: AppConfig }).appConfig = appConfig;
 
-// Register the router instance for type safety
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
+  const rootElement = document.querySelector("#root");
+
+  if (rootElement) {
+    createRoot(rootElement).render(
+      <StrictMode>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} context={{ injector }} />
+        </QueryClientProvider>
+      </StrictMode>
+    );
   }
 }
 
-const rootElement = document.querySelector("#root");
-if (rootElement) {
-  createRoot(rootElement).render(
-    <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </StrictMode>
-  );
-}
+bootstrap().catch((err) => {
+  console.error("Failed to bootstrap application:", err);
+});

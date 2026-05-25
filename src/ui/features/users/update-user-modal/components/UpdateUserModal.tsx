@@ -16,8 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/common/components/ui/select/select";
-import type { User } from "@/ui/lib/api";
-import type { UserRole } from "@/ui/repos/user/user.repo";
+import type { User, UserRole } from "@/ui/repos/user/user.repo";
 import { useUpdateUserForm } from "../hooks";
 
 interface UpdateUserModalProps {

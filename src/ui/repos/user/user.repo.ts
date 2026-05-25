@@ -1,7 +1,10 @@
 import api from "@/ui/lib/api";
-import type { CreateUserBody, CreateUserResponse, GetAllUsersResponse, GetUserByIdResponse, UpdateUserBody, UpdateUserResponse } from "@/ui/repos/user/user.types";
+import type { CreateUserBody, CreateUserResponse, GetAllUsersResponse, GetUserByIdResponse, UpdateUserBody, UpdateUserResponse, UserRole } from "@/ui/repos/user/user.types";
 
-
+export type CreateUserDto = CreateUserBody;
+export type UpdateUserDto = UpdateUserBody;
+export type User = GetUserByIdResponse;
+export type { UserRole };
 
 // Get all users (Admin only)
 export const getAllUsers = async (): Promise<GetAllUsersResponse> => {
@@ -43,7 +46,7 @@ export const deleteUser = async (id: string): Promise<void> => {
 // Update user role (Admin only)
 export const updateUserRole = async (
   userId: string,
-  role: UpdateUserBody["role"],
+  role: UserRole,
 ): Promise<UpdateUserResponse> => {
   const response = await api.put<UpdateUserResponse>(`/auth/users/${userId}`, {
     role,

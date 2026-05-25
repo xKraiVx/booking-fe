@@ -16,8 +16,7 @@ import {
 } from "@/ui/common/components/ui/dropdown-menu/dropdown-menu";
 import { Avatar } from "@/ui/common/components/ui/avatar/avatar";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
-import type { User } from "@/ui/lib/api";
-import type { UserRole } from "@/ui/repos/user/user.repo";
+import type { User, UserRole } from "@/ui/repos/user/user.repo";
 
 interface UserCardProps {
   user: User;

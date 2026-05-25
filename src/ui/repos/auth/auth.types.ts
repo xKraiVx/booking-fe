@@ -1,4 +1,5 @@
 import type { RequestBody, ResponseData } from "@/ui/lib/api-types";
+import type { User } from "@/ui/repos/user/user.repo";
 
 export type RegisterResponse = ResponseData<"/auth/register", "post", 201>;
 export type LoginResponse = ResponseData<"/auth/login", "post", 200>;
@@ -10,4 +11,4 @@ export type ForgotPasswordData = RequestBody<"/auth/forgot-password", "post">;
 export type ResetPasswordData = RequestBody<"/auth/reset-password", "post">;
 export type ChangePasswordData = RequestBody<"/auth/change-password", "post">;
 
-export type AuthResponse = RegisterResponse & LoginResponse;
+export type AuthResponse = (RegisterResponse & LoginResponse) & { user: User };
