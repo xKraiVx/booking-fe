@@ -17,4 +17,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    host: true,
+    port: 5173,
+    // Inside Docker the source is a bind mount, which does not emit fs events
+    watch: process.env.CHOKIDAR_USEPOLLING
+      ? { usePolling: true, interval: 300 }
+      : undefined,
+  },
 })
