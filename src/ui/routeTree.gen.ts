@@ -76,7 +76,7 @@ export interface FileRoutesByFullPath {
   '/auth/callback': typeof AuthCallbackLazyRoute
   '/auth/reset-password': typeof AuthResetPasswordLazyRoute
   '/tenant/$tenantId/book': typeof TenantTenantIdBookRoute
-  '/tenant/$tenantId': typeof TenantTenantIdIndexRoute
+  '/tenant/$tenantId/': typeof TenantTenantIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
@@ -109,7 +109,7 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/auth/reset-password'
     | '/tenant/$tenantId/book'
-    | '/tenant/$tenantId'
+    | '/tenant/$tenantId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -190,7 +190,7 @@ declare module '@tanstack/react-router' {
     '/tenant/$tenantId/': {
       id: '/tenant/$tenantId/'
       path: '/tenant/$tenantId'
-      fullPath: '/tenant/$tenantId'
+      fullPath: '/tenant/$tenantId/'
       preLoaderRoute: typeof TenantTenantIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
