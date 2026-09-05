@@ -41,7 +41,7 @@ import { Calendar, Users, Clock } from "lucide-react";
 import { useGetProfile } from "@/ui/use-cases/auth/useGetProfile";
 import { useState, type JSX } from "react";
 import { UserMenu } from "@/ui/features/user-menu/components/UserMenu";
-import { LoginDialog } from "@/ui/common/LoginDialog";
+import { LoginDialog } from "@/ui/common/components/login-dialog/LoginDialog";
 
 export default function HomePage(): JSX.Element {
   const { t, i18n } = useTranslation();

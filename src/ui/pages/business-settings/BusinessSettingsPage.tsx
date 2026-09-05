@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/ui/common/components/ui/card/card";
-import Loader from "@/ui/common/Loader";
+import Loader from "@/ui/common/components/loader/Loader";
 import { BusinessSettingsForm } from "./components/BusinessSettingsForm";
 import { Plus, Users, Scissors, ExternalLink, Copy, Check } from "lucide-react";
 import { MasterModal } from "@/ui/features/master-modal/components/MasterModal";

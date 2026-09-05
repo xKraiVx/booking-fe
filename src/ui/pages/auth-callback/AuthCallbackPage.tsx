@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import type { JSX } from "react";
 import { useAuthStore } from "@/ui/store/authStore";
 import { getProfile } from "@/ui/repos/auth/auth.repo";
-import Loader from "@/ui/common/Loader";
+import Loader from "@/ui/common/components/loader/Loader";
 
 export default function AuthCallbackPage(): JSX.Element {
   const navigate = useNavigate();

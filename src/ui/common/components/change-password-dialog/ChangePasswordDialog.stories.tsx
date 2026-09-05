@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { expect, userEvent, within } from "storybook/test";
 
-import { Button } from "./components/ui/button/button";
+import { Button } from "@/ui/common/components/ui/button/button";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 
 const meta = {

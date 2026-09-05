@@ -10,7 +10,7 @@ import {
 } from "../../../common/components/ui/dropdown-menu/dropdown-menu";
 import { Avatar } from "../../../common/components/ui/avatar/avatar";
 import { useGetProfile } from "@/ui/use-cases/auth/useGetProfile";
-import { ChangePasswordDialog } from "../../../common/ChangePasswordDialog";
+import { ChangePasswordDialog } from "@/ui/common/components/change-password-dialog/ChangePasswordDialog";
 
 const getRoleBadge = (role: string) => {
   const colors = {

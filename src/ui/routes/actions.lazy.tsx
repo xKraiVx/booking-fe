@@ -1,4 +1,4 @@
-import { ProtectedRoute } from "@/ui/common/ProtectedRoute";
+import { ProtectedRoute } from "@/ui/common/components/protected-route/ProtectedRoute";
 
 import ActionsPage from "@/ui/pages/actions/ActionsPage";
 
