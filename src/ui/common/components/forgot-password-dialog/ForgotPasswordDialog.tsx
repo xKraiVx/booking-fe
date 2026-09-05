@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "./components/ui/button/button";
+import { Button } from "@/ui/common/components/ui/button/button";
 import {
   Dialog,
   DialogContent,
@@ -7,10 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./components/ui/dialog/dialog";
-import { Input } from "./components/ui/input/input";
-import { Label } from "./components/ui/label/label";
-import { forgotPassword } from "../repos/auth/auth.repo";
+} from "@/ui/common/components/ui/dialog/dialog";
+import { Input } from "@/ui/common/components/ui/input/input";
+import { Label } from "@/ui/common/components/ui/label/label";
+import { forgotPassword } from "@/ui/repos/auth/auth.repo";
 
 export function ForgotPasswordDialog() {
   const [email, setEmail] = useState("");

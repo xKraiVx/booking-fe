@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "./components/ui/button/button";
+import { Button } from "@/ui/common/components/ui/button/button";
 import {
   Dialog,
   DialogContent,
@@ -7,13 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./components/ui/dialog/dialog";
-import { Input } from "./components/ui/input/input";
-import { Label } from "./components/ui/label/label";
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../lib/config";
-import { login, register } from "../repos/auth/auth.repo";
-import { useAuthStore } from "../store/authStore";
-import { ForgotPasswordDialog } from "./ForgotPasswordDialog";
+} from "@/ui/common/components/ui/dialog/dialog";
+import { Input } from "@/ui/common/components/ui/input/input";
+import { Label } from "@/ui/common/components/ui/label/label";
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "@/ui/lib/config";
+import { login, register } from "@/ui/repos/auth/auth.repo";
+import { useAuthStore } from "@/ui/store/authStore";
+import { ForgotPasswordDialog } from "@/ui/common/components/forgot-password-dialog/ForgotPasswordDialog";
 import Cookies from "js-cookie";
 import { useRouter } from "@tanstack/react-router";
 

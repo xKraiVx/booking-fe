@@ -5,7 +5,7 @@ import { useUpdateUserRole } from "@/ui/use-cases/user/useUpdateUserRole";
 import { CreateUserModal, UpdateUserModal, UserCard } from "@/ui/features/users";
 import { Button } from "@/ui/common/components/ui/button/button";
 import { UserPlus } from "lucide-react";
-import Loader from "@/ui/common/Loader";
+import Loader from "@/ui/common/components/loader/Loader";
 import type { User, UserRole } from "@/ui/repos/user/user.repo";
 
 export default function UsersPage() {

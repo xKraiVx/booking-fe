@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { expect, userEvent, within } from "storybook/test";
 
-import { ForgotPasswordDialog } from "./ForgotPasswordDialog";
+import { ForgotPasswordDialog } from "@/ui/common/components/forgot-password-dialog/ForgotPasswordDialog";
 
 const meta = {
   title: "Common/ForgotPasswordDialog",

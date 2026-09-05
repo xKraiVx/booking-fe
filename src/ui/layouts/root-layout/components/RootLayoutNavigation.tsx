@@ -1,7 +1,7 @@
 import { Button } from "@/ui/common/components/ui/button/button";
 import { Separator } from "@/ui/common/components/ui/separator/separator";
 import { UserMenu } from "@/ui/features/user-menu/components/UserMenu";
-import { LoginDialog } from "@/ui/common/LoginDialog";
+import { LoginDialog } from "@/ui/common/components/login-dialog/LoginDialog";
 import { Link } from "@tanstack/react-router";
 import type { GetProfileResponse } from "@/ui/repos/auth/auth.types";
 
